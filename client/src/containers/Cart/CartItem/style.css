@@ -1,0 +1,43 @@
+.ItemWrapper{
+    display: flex;
+    padding: 20px;
+}
+.ItemDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0 20px;
+}
+.ItemWrapper > .ItemDetails > .ItemName{
+    font-size: 14px;
+    color: #666;
+}
+.ItemWrapper > .ItemDetails > .ItemPrice{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.CartActionButtons{
+    display: flex;
+}
+
+.btn:hover{
+    background: black;
+    color: #fff;
+}
+
+.btn{
+    width: 80px;
+    height: 40px;
+    margin: 10px;
+    border: 0;
+    background: #22402b;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 0 2px 0 #a9a9a9;
+    border-radius: 5px;
+    margin-left: 124px;
+
+}
