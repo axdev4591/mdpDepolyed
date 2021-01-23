@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGODB_USERNAME": "admin",
+        "MONGODB_PASSWORD": "admin4591",
+        "JWT_SECRET": "secretkey"
+    }
+}
