@@ -198,6 +198,7 @@ exports.getProductsByCategory = (req, res, next) => {
 //update one product in DB
 exports.updateProduct = (req, res, next) => {
    
+    console.log("update prod "+ JSON.stringify(req.body))
     const ProductObject = req.file ? 
                         { ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
                         : { ...req.body}
@@ -214,7 +215,7 @@ exports.updateProduct = (req, res, next) => {
   }
 
 //delete one product in DB
-exports.deleteProduct2 = (req, res, next) => {
+exports.deleteProduct = (req, res, next) => {
 
     console.log("***********request to delete "+ JSON.stringify(req.body))
     Product.findOne({_id: req.params.id})
@@ -241,7 +242,7 @@ exports.deleteProduct2 = (req, res, next) => {
     
   }
 
-  exports.deleteProduct = async (req, res) => {
+  exports.deleteProduct2 = async (req, res) => {
     const deletedProduct = await Product.findById(req.params.id)
 
     console.log("produc id "+ req.params.id)

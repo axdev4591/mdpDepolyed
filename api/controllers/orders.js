@@ -43,6 +43,8 @@ exports.createOrder = (req, res, next) => {
 
 exports.getUserOrders = (req, res, next) => {
 
+
+    console.log("get orders "+JSON.stringify(req.params.userId))
     const userId = req.params.userId;
     Order.find({"user": userId})
     .select('address order orderDate paymentType paymentStatus isOrderCompleted')

@@ -124,7 +124,7 @@ exports.QtyUpdate = (req, res, next) => {
         res.status(201).json({
             message: cartItem
         });
-        console.log("update cart get response $$$$$$$$"+ JSON.stringif(cartItem))
+        console.log("update cart get response $$$$$$$$"+ JSON.stringify(cartItem))
 
     })
     .catch(error => {
@@ -136,3 +136,33 @@ exports.QtyUpdate = (req, res, next) => {
     });
 
 }
+
+exports.DeleteCartItem = (req, res, next) => {
+
+    const userId = req.body.userId;
+    const productId = req.body.productId;
+
+    CartItem.findOneAndUpdate({"user": userId, "cart.product": productId}, 
+    { $pull: { "cart" : { product: productId } } },         { new: true }
+    )
+    .exec()
+    .then(cartItem => {
+        res.status(201).json({
+            message: cartItem
+        });
+        console.log("update cart remove item "+ JSON.stringify(cartItem))
+
+    })
+    .catch(error => {
+        res.status(500).json({
+            error: error
+        });
+        console.log(" error update relmove item cart "+ error)
+
+    });
+
+}
+
+/***CartItem.find(
+        {"cart.product": productId}, 
+        {cart: {$elemMatch: {product: productId}}}) */

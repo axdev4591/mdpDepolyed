@@ -94,6 +94,11 @@ exports.createAdmin = (req, res, next) => {
 
 exports.createAddress = (req, res, next) => {
 
+console.log("create adresss \n\n")
+
+console.log("create adresss "+JSON.stringify(req.body))
+console.log("create adresss \n\n")
+
     UserAddress.findOne({"user": req.body.userId})
     .exec()
     .then(user => {
@@ -130,7 +135,9 @@ exports.createAddress = (req, res, next) => {
             .catch(error => {
                 res.status(500).json({
                     error: error
-                });
+                })
+                console.log("500 error adresss "+JSON.stringify(error))
+
             })
 
         }
@@ -148,6 +155,8 @@ exports.getAddress = (req, res, next) => {
         res.status(200).json({
             message: user
         })
+        console.log("ù$$$$$$$$$$$ adress "+JSON.stringify(user))
+
     })
     .catch(error => {
         res.status(500).json({
@@ -213,7 +222,6 @@ exports.login = (req, res, next) => {
 
 exports.signup = (req, res, next) => {
     console.log("body  : "+JSON.stringify(req.body))
-    console.log("body   email : "+req.body.email)
 
     User.findOne({email: req.body.email})
     .exec()

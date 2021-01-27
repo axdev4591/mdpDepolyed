@@ -13,14 +13,17 @@ exports.getToken = (user) => {
     },
     config.JWT_SECRET,
     {
-      expiresIn: '48h',
+      expiresIn: '1h',
     }
-  );
-};
+  )
+}
 
 exports.isAuth = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log("token************** "+token)
+  console.log("provided token:  \n\n")
+  console.log(token)
+  console.log("provided token:  \n\n")
+
 
   if (token) {
     const onlyToken = token.slice(7, token.length);
@@ -42,7 +45,7 @@ exports.isAdmin  = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     return next();
   }
-  return res.status(401).send({ message: 'Admin Token is not valid.' });
+  return res.status(401).send({ message: 'Your are not Admin.' });
 };
 
 
