@@ -3,7 +3,8 @@ import Header from '../../components/Header/Header';
 import './style.css';
 import React, {useEffect,  useState } from 'react';
 import { useSelector, useDispatch} from 'react-redux'
-import {useParams } from 'react-router-dom'
+import {useParams, Link } from 'react-router-dom'
+
 import { detailsProduct } from '../../store/actions/productActions'
 import {usePath} from 'hookrouter';
 //import Rating from '../components/Rating';
@@ -70,7 +71,14 @@ const ProductDetails = (props) => {
                             <img src={product.imageUrl} alt="" />
                         </div>
                         <div className="ActionButtonWrapper">
-                             <button  style={{marginRight: "6px"}} onClick={() => addItemToCart(product)}><i className="fas fa-shopping-cart" style={{marginRight: "3px"}}></i>&nbsp;Ajouter au panier</button>        
+                             <button  style={{marginRight: "6px"}} onClick={() => {
+                                 addItemToCart(product)
+                                props.history.push('/cart')
+                             } }>
+                                <i className="fas fa-shopping-cart" style={{marginRight: "3px"}}></i>
+                                &nbsp;
+                                Ajouter au panier
+                             </button>        
                         </div>
                         
                     </div>

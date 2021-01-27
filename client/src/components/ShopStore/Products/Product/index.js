@@ -28,14 +28,13 @@ const Product = props => {
                 <div className="ProductDetails">
                     <p className="nameP" style={{fontSize: "21px"}}>{props.name}</p>
                     <p style={{marginTop: "14px"}} className="priceP">{props.price}<span>€</span></p>
-                    <div style={{marginTop: "7px", flexDirection: "column"}} className="btnP">
-                        <span>Ajouter </span>
-                    </div>
+                    <p style={{marginTop: "7px", flexDirection: "column"}} className="btnP">
+                       Ajouter
+                    </p>
                 </div>
             </div>
         </Link>
     );
 }
 
-//export default Product
-export default withRouter(Product);
+export default Product

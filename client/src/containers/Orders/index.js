@@ -3,6 +3,8 @@ import Header from '../../components/Header/Header'
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {base_url} from '../../constants/index'
+import Axios from 'axios'
+
 
 
 
@@ -16,45 +18,45 @@ const Orders = (props) => {
   useEffect(() => {
     
     if(!userInfo){
-        
-            if(userInfo.token){
-                getOrders()
-                console.log("standard user")
-            }else{
-                props.history.push('/login');
-            }  
-        
+
+        props.history.push('/login');
+                 
     }else{
-        if(userInfo.firstName == "admin"){
-            adminGetAllOrders()
-        }else{
+       // if(userInfo.firstName == "admin"){
+         //   adminGetAllOrders()
+       // }else{
             getOrders()
-        }
+        
     
     }
     return () => {
     };
-  }, [userInfo]);
+  }, []);
 
-     const getOrders = () => {
+     const getOrders = async () => {
         console.log(userInfo)
+        try{
 
-        fetch(`${base_url}/order/getorders/${userInfo._id}`, {
+        const { data } = await Axios.get(`${base_url}/order/getorders/${userInfo.userId}`, {
             headers: {
-                'Content-Type': 'application/json',
-                'auth-token': userInfo.token
+                  Authorization: ' Bearer ' + userInfo.token
             }
         })
+        console.log("responseorder: "+JSON.stringify(data.message));
+        setOrderList(data.message)
+
+
+        /*
         .then(response => response.json())
         .then(jsonResponse => {
             console.log("get orders: "+jsonResponse.message);
             console.log("responseorder: "+JSON.stringify(jsonResponse.message));
             
-            setOrderList(jsonResponse.message)
-        })
-        .catch(error => {
+            setOrderList(data.data.message)
+        })*/
+    }catch(error){
             console.log(error);
-        })
+        }
     }
 
     /****get all orders for administration back office */
@@ -136,8 +138,12 @@ const Orders = (props) => {
                                             <a className="odp" style={{color: "white"}}>{order.paymentType}</a>
                                         </div>
                                         <div className="od3">
-                                            <p className="odtitle" >Statut du paiment</p>
+                                            <p className="odtitle" >Statut du paiement</p>
                                             <a className="odp" style={{color: "white"}}>{order.paymentStatus}</a>
+                                        </div>
+                                        <div className="od3">
+                                            <p className="odtitle" >Statut de la livraison</p>
+                                            <a className="odp" style={{color: "white"}}>{ order.isOrderCompleted ? "livré le 12/01/2021" : order.paymentStatus }</a>
                                         </div>
                                     
                                     </div>

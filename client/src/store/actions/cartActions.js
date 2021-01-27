@@ -3,35 +3,6 @@ import Cookie from "js-cookie";
 import { ADD_TO_CART, GET_CART_DETAILS, UPDATE_CART, CLEAR_CART, CART_ADD_ITEM } 
 from "../../constants/cartConstants"
 import { base_url } from '../../constants/index'
-/*
-export const addToCart = (token, cartItem) => {
-    return async dispatch => {
-        try{
-            console.log("anana add cart "+JSON.stringify(cartItem))
-            console.log("anana add cart token"+JSON.stringify(token))
-            const response = await fetch(`${base_url}/cart/add`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': token
-                },
-                body: JSON.stringify(cartItem),
-                method: 'POST'
-            });
-            const jsonResposne = await response.json();
-            if(response.status === 201){
-                dispatch({
-                    type: ADD_TO_CART,
-                    cartItem: cartItem
-                });
-            }
-
-            return jsonResposne;
-        }catch(error){
-            console.log(error);
-        }
-    }
-}
-*/
 
 
 export const addToCart = (userInfo, cartItems) => async (dispatch, getState) => {
@@ -63,6 +34,8 @@ export const getCartItems = (userInfo) => async (dispatch, getState) => {
                   Authorization: ' Bearer ' + userInfo.token
                 }
               })
+
+              console.log("get cart items from cartActions "+JSON.stringify(data.data.message[0]))
            
             dispatch({
                 type: GET_CART_DETAILS,
@@ -94,13 +67,10 @@ export const updateCart = (token, userId, product) => async (dispatch, getState)
         }
       })
       
-      console.log("$$$$$$$$$$$$$$$$$$$"+JSON.stringify(data))
-      if(data.status === 201){
         dispatch({
             type: UPDATE_CART,
             item: product
         });
-    }
      
       const { cart: { cartItem } } = getState();
       Cookie.set("cartItem", JSON.stringify(cartItem));
@@ -110,31 +80,22 @@ export const updateCart = (token, userId, product) => async (dispatch, getState)
     }
    
 }
-
-export const clearCart = (token, userId, product) => async (dispatch, getState) => {
+export const clearCart = (userInfo, product) => async (dispatch, getState) => {
 
     const product1 = {
-         userId: userId,
+         userId: userInfo.userId,
          productId: product.productId
      }
+
+     console.log(userInfo.token)
  
      try {
-         const { data } = await Axios.put(`${base_url}/cart/delete/`, product1, {
+         const { data } = await Axios.put(`${base_url}/cart/delete/${userInfo.userId}`, product1, {
          headers: {
-           Authorization: ' Bearer ' + token
+           Authorization: ' Bearer ' + userInfo.token
          }
        })
-       
-       console.log( JSON.stringify(data))
-       if(data.status === 201){
-        dispatch({
-            type: CLEAR_CART,
-            payload: null
-        })
-     }
-      
-       const { cart: { cartItem } } = getState();
-       Cookie.set("cartItem", JSON.stringify(cartItem));
+
    
      } catch (error) {
          console.log(error);

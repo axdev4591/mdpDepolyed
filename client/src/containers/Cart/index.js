@@ -7,6 +7,7 @@ import CartPrice from '../../components/CartPrice';
 
 import { addToCart, updateCart, getCartItems} from '../../store/actions/cartActions'
 import { useDispatch, useSelector } from 'react-redux'
+import { Route , withRouter} from 'react-router-dom'
 
 
 const Cart = (props) => {
@@ -117,16 +118,15 @@ const Cart = (props) => {
                                         decreaseQuantity={decreaseQuantity}
                                 />)
                             }
-                            
 
                             <div className="PlaceOrder">
-                                <button className="PlaceOrderButton" onClick={() => props.history.push('/place-order')}>Passer la commande</button>
+                                <button className="PlaceOrderButton" onClick={() => props.history.push('/')}>Poursuivre mes achats</button>
                             </div>
 
                         </div>
                     </div>
                     
-                    <CartPrice />
+                    <CartPrice red={props}/>
 
                 </div>
             </div>

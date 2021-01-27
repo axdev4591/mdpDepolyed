@@ -10,6 +10,9 @@ import {
 const CartItem = (props) => {
 
     const dispatch = useDispatch();
+    const userSignin = useSelector(state => state.userSignin);
+    const { loading, userInfo, error } = userSignin;
+
     const removeFromCartHandler = () => {
         const product = {
                     productId: props.productId,
@@ -17,7 +20,7 @@ const CartItem = (props) => {
                     total: props.total
 
                     }
-        dispatch(clearCart(product));
+        dispatch(clearCart(userInfo, product));
       }
 
 

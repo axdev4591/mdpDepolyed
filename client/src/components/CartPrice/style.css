@@ -2,3 +2,40 @@
     width: 30%;
     box-shadow: 0 0 2px 0px #cecece;
 }
+
+.PlaceOrder{
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 0 15px 0px #c3c2c2;
+    margin-top: 20px;   
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.PlaceOrderButton{
+    border: 0;
+    outline: none;
+    background:  #483D8B;
+    color: #fff;
+    font-weight: bold;
+    width: 150px;
+    height: 40px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+.PlaceOrderButton:hover{
+    border: 0;
+    outline: none;
+    background:  black;
+    color: #fff;
+    font-weight: bold;
+    width: 150px;
+    height: 40px;
+    text-transform: uppercase;
+    cursor: pointer;
+}

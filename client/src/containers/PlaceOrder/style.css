@@ -23,14 +23,23 @@
     margin: 10px 0; 
 }
 .DeliveryAddressButton, .ContinueButton, .OrderConfirmButton, .PaymentConfirm{
-    background: orange;
+  
+    width: 40%;
+    height: 40px;
+    margin: 10px;
     border: 0;
-    color: #252525;
-    font-size: 14px;    
-    box-shadow: 0 0 2px 0 #ccc;
+    background: #22402b;
+    cursor: pointer;
     color: #fff;
-    height: 35px;
-    padding: 0 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 0 2px 0 #a9a9a9;
+    border-radius: 5px;
+}
+
+.DeliveryAddressButton, .ContinueButton, .OrderConfirmButton, .PaymentConfirm:hover{
+  
+    background: orange;
 }
 .paymentType{
     display: block;

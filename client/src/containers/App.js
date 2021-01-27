@@ -34,6 +34,7 @@ import { userSigninReducer, userRegisterReducer, userUpdateReducer} from '../sto
 
 //Cart reducers
 import cartReducers from '../store/reducers/cartReducers';
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const cartItems = Cookie.getJSON('cartItem') || [];
 const userInfo = Cookie.getJSON('userInfo') || null;
@@ -59,11 +60,11 @@ const reducer = combineReducers({
 });
 
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducer,
   initialState,
-  composeEnhancer(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 
@@ -83,7 +84,11 @@ function App() {
               <Route path="/login" component={Login} />  
               <Route path="/signup" component={Signup} />
                <PrivateRoute path="/cart" component={Cart} />
-              
+               <PrivateRoute path="/place-order" component={PlaceOrder} />
+               <PrivateRoute path="/thank-you" component={ThankYou} />
+              <PrivateRoute path="/orders" component={Orders} />
+
+
               <Route path="/"  component={ShopeStore} />
              
                   {/**

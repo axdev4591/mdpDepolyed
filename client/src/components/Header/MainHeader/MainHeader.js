@@ -27,7 +27,7 @@ const MainHeader = (props) => {
                 </div>
             </div>
             <div>
-                <Link to="/cart"><i className="fas fa-shopping-cart"></i>(<span style={{color: "orange"}}>{ userInfo ? cartCount : 0 }</span>)</Link>
+                <Link to="/cart"><i className="fas fa-shopping-cart"></i>(<span style={{color: "green"}}>{ userInfo ? cartCount : 0 }</span>)</Link>
                 
             </div>
         </div>

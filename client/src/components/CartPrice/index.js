@@ -1,20 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
-import { connect } from 'react-redux';
+import  { Redirect } from 'react-router-dom'
+import { addToCart, updateCart, getCartItems} from '../../store/actions/cartActions'
+import { useDispatch, useSelector } from 'react-redux'
+
+
 
 const CartPrice = (props) => {
+
+
+  const cart = useSelector(state => state.cart);
+  const { cartItem, totalAmount, cartCount} = cart
+
+  const userSignin = useSelector(state => state.userSignin);
+  const { loading, userInfo, error } = userSignin;
+
+  const [qty, setQty] = useState(0)
+
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+      dispatch(getCartItems())
+
+  }, [])
+
 
     return (
         <div className="PriceWrapper">
             {/* show price */}
             <div className="CardTitle">
-                <h3>Détails du prix</h3>
+                <h3>Détails de la commande</h3>
             </div>
             <div className="CardBody">
                 <div className="FinalBilling">
                     <div className="Row">
-                        <p>Prix ({props.cart.cartCount})</p>
-                        <p>{props.cart.totalAmount}€</p>
+                        <p>Prix ({cartCount})</p>
+                        <p>{totalAmount}€</p>
                     </div>
                     <div className="Row">
                         <p>Livraison</p>
@@ -22,8 +44,11 @@ const CartPrice = (props) => {
                     </div>
                     <hr />
                     <div className="Row">
-                        <h4>Total Payable</h4>
-                        <h4>{props.cart.totalAmount}€</h4>
+                        <h4>Total à Payer</h4>
+                        <h4>{totalAmount}€</h4>
+                    </div>
+                    <div className="PlaceOrder">
+                        <button className="PlaceOrderButton" onClick={() => props.red.history.push('/place-order')}>Passer la commande</button>
                     </div>
                 </div>
                 
@@ -34,10 +59,5 @@ const CartPrice = (props) => {
 
 }
 
-const mapStateToProps = state => {
-    return {
-        cart: state.cart
-    }
-}
 
-export default connect(mapStateToProps, null)(CartPrice);
+export default CartPrice

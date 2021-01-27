@@ -6,6 +6,8 @@ const DeliveryAddress = props => {
 
     const {address} = props;
 
+    console.log("adressss: : : "+JSON.stringify(address))
+
     return (
                 <div style={{margin: '10px 0'}}>
                     <div className="AddressSelection" key={address._id}>

@@ -21,26 +21,28 @@ const BottomHeader = (props) => {
     
 
 
-    const categoryTree = (categories) => {
-
-        //console.log(categories);
+    const categoryTree = (cate) => {
 
         var categoriesAr = [];
-        for(var value of categories){
 
+            if(cate){
+
+
+        cate.map((value) => {
             categoriesAr.push(
                     <li key={value.slug} className="Column">
                         <NavLink to={`/products/${value.slug}/1`}>{value.name}</NavLink>
                         {value.children.length > 0 ? (<ul>{this.categoryTree(value.children)}</ul>) : null}
                     </li>
-            );
+            )
+        })
         }
 
         return categoriesAr;
     }
 
- 
         const cat = categoryTree(categories);
+    
 
         return (
             <div className="BottomHeader">

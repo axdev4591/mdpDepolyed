@@ -25,43 +25,6 @@ import {
   import { base_url } from '../../constants/index'
 
 
-  //retrieve product for home page
- const listProductsFiltered = (categorySlug = '', filter) => {
-        return async (dispatch) => {
-
-            try{
-
-                categorySlug = (categorySlug == 'all') ? '' : categorySlug;
-
-                let query = '';
-                if(filter){
-                    query = '?filter=1&'
-                    for(let prop in filter){
-                        query += `${prop}=${filter[prop]}&`
-                    }
-                    query = query.substring(0, query.length-1);
-                }
-
-                const response = await fetch(`${base_url}/products/${categorySlug}${query}`)
-                
-                const jsonResponse = await response.json();
-                if(response.status == 200){
-                    dispatch({
-                        type: PRODUCT_LIST_REQUEST,
-                        payload: jsonResponse.message
-                    });
-                }
-
-                console.log("########prod "+JSON.stringify(jsonResponse.message))
-                return jsonResponse;
-
-            }catch(error){
-                console.log(error);
-            }
-
-        }
-    }
-
   //retrieve product for admin dashboard
   const listProducts = (categorySlug = '', filter) => async (dispatch) => {
      
@@ -72,6 +35,11 @@ import {
             console.log(`${base_url}/products/${filter}`)
       
             dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data.message })
+            console.log("\n\n")
+            console.log("get products from ProductActions: " + JSON.stringify(data.message))
+            console.log("\n\n")
+
+
           }
           catch (error) {
             dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message })
@@ -86,6 +54,9 @@ import {
           console.log(`${base_url}/products/${categorySlug}/${filter}`)
       
           dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data.message })
+          console.log("\n\n")
+          console.log("get products from ProductActions: " + JSON.stringify(data.message))
+          console.log("\n\n")
           }catch (error) {
             dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message })
           }
@@ -100,7 +71,10 @@ import {
     try {
       dispatch({ type: CATEGORY_LIST_REQUEST })
       const { data } = await axios.get(`${base_url}/category`)
-    
+      console.log("\n\n")
+      console.log("get categories from ProductActions: " + JSON.stringify(data.message))
+      console.log("\n\n")
+
       dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data.message })
     } catch (error) {
       dispatch({ type: CATEGORY_LIST_FAIL, payload: error.message })
@@ -116,7 +90,7 @@ import {
             userSignin: { userInfo },
           } = getState();
         
-        if(userInfo.email=="axdev2020@gmail.com"){
+        if(userInfo.isAdmin){
         dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product })
         
         const products = new FormData()
@@ -131,19 +105,18 @@ import {
         if (product.create) {
             const { data } = await Axios.post(`${base_url}/products/create`, products, {
             headers: {
-                'Content-Type': 'application/json',
-                'auth-token': userInfo.token
+              Authorization: 'Bearer ' + userInfo.token
             },
             })
 
             dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data.message });
 
         } else {
+          console.log("token: "+userInfo.token)
             const { data } = await Axios.put(`${base_url}/products/update/${product._id}`,  products, {
                 headers: {
-                'Content-Type': 'application/json',
-                'auth-token':  userInfo.token
-            },
+                  Authorization: 'Bearer ' + userInfo.token
+                },
             }
             )
 
@@ -153,6 +126,7 @@ import {
         }
     } catch (error) {
         dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.message })
+        console.log("not admin "+error)
         }
   };
 
@@ -179,11 +153,11 @@ import {
         userSignin: { userInfo },
       } = getState();
     
-    if(userInfo.email=="axdev2020@gmail.com"){
+    if(userInfo.isAdmin){
       dispatch({ type: PRODUCT_DELETE_REQUEST, payload: product._id })
       const { data } = await axios.delete(`${base_url}/products/delete/${product._id}`, {
         headers: {
-          'auth-token': userInfo.token
+          Authorization: 'Bearer ' + userInfo.token
         },
       })
       console.log('success deleted')
@@ -224,7 +198,6 @@ import {
     saveProduct,
     deleteProduct,
     saveProductReview,
-    listCategories,
-    listProductsFiltered
-  }
+    listCategories
+      }
   

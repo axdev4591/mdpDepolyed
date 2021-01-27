@@ -16,6 +16,7 @@ import {
 } from '../../store/actions/productActions'
 
 import './style.css';
+import {MdpButton} from '../../components/UI/MdpStyledComponents'
 
 
 const ProductsScreen = (props) => {
@@ -63,9 +64,8 @@ const ProductsScreen = (props) => {
     if (successSave) {
       setModalVisible(false);
     }
+    dispatch(listProducts('', 1))
     dispatch(listCategories())
-    dispatch(listProducts(userInfo.token))
-
   }, [successSave, successDelete])
 
   const openModal = (product) => {
@@ -105,18 +105,11 @@ const ProductsScreen = (props) => {
 
   const deleteHandler = () => {
 
-    if(openDialog){
+    console.log(JSON.stringify(delProduct))
 
-    categories.map((cat) => {
-      //setCategory(cat._id) pb avec select faut choisir dans tout les cas
-      if (cat.name == delProduct.category){
-        delProduct["category"] = cat._id 
-      }
-    })
-
-    dispatch(deleteProduct(delProduct, userInfo.token))
+    dispatch(deleteProduct(delProduct))
     setDelProduct(null)
-  }
+  
   }
 
 
@@ -131,19 +124,20 @@ const ProductsScreen = (props) => {
       })
     })
 
+    console.log(JSON.stringify(listOfProducts))
   
   return (
     <div className="Content">
     <div className="Card">
       <div className="product-header">
-        <h3>Liste des produits</h3>
-        <button className="btn btn-success" onClick={() => {
+        <h4>Liste des produits</h4>
+        <MdpButton outline mdpXL onClick={() => {
             setCreate(true)
             openModal({})
         } }
         >
-         Nouveau Produit
-        </button>
+         Ajouter
+        </MdpButton>
       </div>
     {modalVisible && (
         <div className="form">
@@ -193,13 +187,6 @@ const ProductsScreen = (props) => {
                         return <option key={cat._id} value={cat._id}>{cat.name}</option>
                     })}
                 </select>
-               {/**<input
-                  type="text"
-                  name="category"
-                  value={category}
-                  id="category"
-                  onChange={(e) => setCategory(e.target.value)}
-                ></input> */} 
               </li>
               <li>
                 <label htmlFor="stock">Quantité</label>
@@ -213,31 +200,27 @@ const ProductsScreen = (props) => {
               </li>
               <li>
                 <label htmlFor="description">Description</label>
-                <textarea
+                <textarea style={{height: "100px"}}
                   name="description"
                   value={description}
                   id="description"
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </li>
-              <li>
-                <button type="submit" className="btn btn-primary">
-                  {create ? 'Enregistrer' : 'Mettre à jour'}
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
+              <li style={{flexDirection: "row"}}>
+              <MdpButton outline mdpXL style={{marginRight: "72px" }}
                   onClick={(e) => {
                     e.preventDefault()
                     setModalVisible(false)
                     dispatch(listCategories())
-                    dispatch(listProducts())
+                    dispatch(listProducts('', 1))
                   }}
-                  className="btn btn-info"
                 >
                   Annuler
-                </button>
+                </MdpButton>
+                <MdpButton type="submit" outline mdpXL style={{marginLeft: "82px" }}>
+                  {create ? 'Enregistrer' : 'Sauvegarder'}
+                </MdpButton>
               </li>
             </ul>
           </form>
@@ -252,7 +235,7 @@ const ProductsScreen = (props) => {
               <th>Item</th>
               <th>Description</th>
               <th>Prix</th> 
-              <th>Quantité</th> 
+              <th>En stock</th> 
               <th>Catégorie</th>
               <th>Date</th>
               <th>Action</th>
@@ -269,23 +252,25 @@ const ProductsScreen = (props) => {
                 <td>{product.category}</td>
                 <td>{product.createdAt.split("T")[0]}</td>
                 <td>
-                  <button className="btn btn-sm round btn-outline-success" 
+                  <MdpButton outline mdpS mdpEdit
                   onClick={() => {
                     setCreate(false)
                     openModal(product)
                   }}
                   >
                     Editer
-                  </button>{' '}
-                  <button
-                    className=" btn btn-sm btn-outline-danger"
+                  </MdpButton>{' '}
+                  <MdpButton
+                    outline
+                    mdpS
+                    mdpDelete
                     onClick={() => { 
                       setDelProduct(product)
                       setOpenDialog(true)
                     }}
                   >
                     Supprimer
-                  </button>
+                  </MdpButton>
                 </td>
               </tr>
             ))}
@@ -337,7 +322,7 @@ const ProductsScreen = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-            </div>) }
+    </div>) }
     </div>)
             }
 

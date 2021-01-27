@@ -6,11 +6,20 @@ import CartPrice from '../../components/CartPrice';
 import DeliveryAddress from './DeliveryAddress';
 import RadioButton from '../../components/UI/RadioButton';
 import { base_url } from '../../constants/index';
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import Axios from 'axios'
+import { addToCart, updateCart, getCartItems } from '../../store/actions/cartActions'
+
 
 const PlaceOrder = (props) => {
+
+
+    const cart = useSelector(state => state.cart);
+    const { cartItem, totalAmount, cartCount} = cart
+    const dispatch = useDispatch()
+
 
     const userSignin = useSelector(state => state.userSignin);
     const { loading, userInfo, error } = userSignin;
@@ -32,18 +41,30 @@ const PlaceOrder = (props) => {
     const [isOrderConfirm, setIsOrderConfirm] = useState(false)
     const [selectedPaymentType, setSelectedPaymentType] = useState('COD')
     const [paymentTypes, setPaymentTypes] = useState([
-        {id: 1, value: 'card', label: 'Credit Card / Debit Card / ATM Card', isActive: false},
-        {id: 2, value: 'netBanking', label: 'Net Banking', isActive: false},
+        {id: 1, value: 'card', label: 'Carte de Credit', isActive: false},
+        {id: 2, value: 'netBanking', label: 'Western Union', isActive: false},
         {id: 3, value: 'paypal', label: 'Paypal', isActive: false},
         {id: 4, value: 'cod', label: 'Cash après livraison', isActive: true},
     ])
 
+    useEffect(() => {
 
+          if(!userInfo){
+
+                    props.history.push('/login')
+          
+        }
+
+        dispatch(getCartItems(userInfo))
+        getAddresses()
+    
+
+    }, [])
 
     const getAddresses = () => {
-        fetch(`${base_url}/user/get-addresses/`+userInfo._id, {
+        fetch(`${base_url}/user/get-addresses/`+userInfo.userId, {
             headers: {
-                'auth-token': userInfo.token
+                  Authorization: ' Bearer ' + userInfo.token
             }
         })
         .then(response => {
@@ -54,12 +75,15 @@ const PlaceOrder = (props) => {
             }
         })
         .then(jsonResponse => {
-            console.log(jsonResponse)
+            console.log("response adress "+JSON.stringify(jsonResponse.message.address))
             setAddresses(jsonResponse.message.address)
         })
         .catch(error => {
             console.log(error);
+            console.log("response adress error "+JSON.stringify(error))
+
         });
+
     }
 
     const inputHandler = (e) => {
@@ -83,43 +107,43 @@ const PlaceOrder = (props) => {
         setNewAddress(true)
     }
 
-    const addressSubmitHandler = (e) => {
-        e.preventDefault()
-        console.log(address)
 
-        const address = {
-            userId: userInfo._id,
+
+    const addressSubmitHandler = async (e) => {
+        e.preventDefault()
+
+        try {
+
+        const myaddress = {
+            userId: userInfo.userId,
             address: address
         }
+        console.log(userInfo.token)
 
-       fetch(`${base_url}/user/new-address`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': userInfo.token
-            },
-            method: 'POST',
-            body: JSON.stringify(address)
-       })
-       .then(response => response.json())
-       .then(jsonResponse => {
-           console.log('new address');
-           console.log(jsonResponse);
-           console.log('new address');
-          
-           const updatedAddressList = jsonResponse.message.address
+        const data = await Axios.post(`${base_url}/user/new-address`, myaddress, {
+                headers: {
+                  Authorization: ' Bearer ' + userInfo.token
+                }
+              }
+               )
+
+
+            console.log("retour *****"+ JSON.stringify(data.data.message.address))
+            const updatedAddressList = data.data.message.address
 
             setIsAddressConfirm(true)
             setAddress({
-                ...this.state.address,
+                ...address,
                 ...address.address
             })
             setAddresses(updatedAddressList)
             setSelectedAddress(updatedAddressList[updatedAddressList.length - 1]._id)
-           
-       })
-       .catch(error => {
-           console.log(error);
-       })
+
+
+        }catch(err){
+            console.log(err)
+        }
+
     }
 
     const confirmDeliveryAddress = () => {
@@ -136,48 +160,40 @@ const PlaceOrder = (props) => {
 
     const submitOrder = async () => {
 
-        if(!isOrderConfirm){
-            return
-        }
-
-        if(selectedPaymentType !== 'COD'){
-            return;
-        }
-        
-        const order = props.cart.cartItem.map(item => {
-            return {
-                product: item.product,
-                price: item.price,
-                quantity: item.quantity
-            }
-        });
-
         try{
 
-            const response = await fetch(`${base_url}/order/create`,{
-                headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': userInfo.token
-                },
-                body: JSON.stringify({
-                    user: userInfo._id,
+            const order = cartItem.map(item => {
+                return {
+                    product: item.product,
+                    price: item.price,
+                    quantity: item.quantity
+                }
+            });
+
+            const data = {
+                    user: userInfo.userId,
                     address: selectedAddress,
                     order: order,
                     paymentType: 'COD',
                     paymentStatus: 'pending'
-                }),
-                method: 'POST'
-            });
+                }
+            const response = await Axios.post(`${base_url}/order/create`,  data, {
+                headers: {
+                  Authorization: ' Bearer ' + userInfo.token
+                }
+              }
+               )
 
-            const jsonResponse = await response.json();
-            if(response.status === 201){
-                 props.clearCart()
+            const jsonResponse = response.data.message
+
+
+            console.log("after crete order succeed *****"+ JSON.stringify(response.data))
                  props.history.push({
                     pathname: '/thank-you',
-                    search: '?orderid='+jsonResponse.message._id,
-                    state: jsonResponse.message
+                    search: '?orderid='+jsonResponse._id,
+                    state: jsonResponse
                 });
-            }
+    
 
         }catch(error){
             console.log(error);
@@ -189,7 +205,7 @@ const PlaceOrder = (props) => {
         if(isAddressConfirm && !newAddress){
             getaddress = addresses.find(address => address._id === selectedAddress);
         }else{
-            getaddress = this.state.address;
+            getaddress = address
         }
 
         return (
@@ -202,7 +218,7 @@ const PlaceOrder = (props) => {
                         <div className="DeliveryAddress">
 
                             <div className="Card">
-                                <p className="CardText">Login {userInfo ? <i className="fas fa-check"></i> : null}</p>
+                                <p className="CardText">Login {userInfo ? <i style={{color: "green"}} className="fas fa-check"></i> : null}</p>
                                 <p className="CardText">Email: {userInfo.email}</p>
                             </div>
 
@@ -225,6 +241,7 @@ const PlaceOrder = (props) => {
                                                 onAddressSelection={addressSelector} 
                                                 value={selectedAddress}
                                                 address={getaddress} />
+
                                         )
                                     }
                                     {
@@ -239,7 +256,7 @@ const PlaceOrder = (props) => {
                                     <div>
                                         <RadioButton 
                                             name="address"
-                                            label="Add new Address"
+                                            label="Ajouter une adresse"
                                             value={selectedAddress}
                                             onChange={newAddressSelection}
                                         />
@@ -269,15 +286,15 @@ const PlaceOrder = (props) => {
                                     <div className="Card">
                                         <h4 className="CardText">Résumé de la commande</h4>
                                         {
-                                             props.cart.cartItem.map(item => (
+                                             cartItem.map(item => (
                                                 <div key={item.product} style={{display: 'flex', margin: '5px 0', alignItems: 'center'}}>
                                                     <div style={{width: '60px', height: '60px', overflow: 'hidden', position: 'relative'}}>
                                                         <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={item.imageUrl} alt="" />
                                                     </div>
                                                     <div>
                                                         <h5>{item.name}</h5>
-                                                        <h6>Quantity : {item.quantity}</h6>
-                                                        <h6>${item.total}</h6>
+                                                        <h6>Quantité : {item.quantity}</h6>
+                                                        <h6>{item.total}€</h6>
                                                     </div>
                                                 </div>
                                             ))
@@ -288,7 +305,7 @@ const PlaceOrder = (props) => {
                                 }
                                 
                                 {
-                                    this.state.isOrderConfirm ? 
+                                    isOrderConfirm ? 
                                     <div className="Card">
                                     <h4 className="CardText">Option de paiement</h4>
                                     <ul>
@@ -309,7 +326,14 @@ const PlaceOrder = (props) => {
                                         selectedPaymentType !== 'cod' ? 
                                         <p className="ErrorMessage">Désolé, seul le paiment en espèce à la livraison est disponible</p> : null
                                     }
-                                    <button className="PaymentConfirm" onClick={submitOrder}>Confirmer la commande</button>
+                                    <button className="PaymentConfirm" onClick={
+                                        () => { 
+                                             if( isOrderConfirm == true ){
+
+                                                submitOrder()
+                                             }
+                                            }
+                                        }>Confirmer la commande</button>
 
                                 </div> : null
                                 }

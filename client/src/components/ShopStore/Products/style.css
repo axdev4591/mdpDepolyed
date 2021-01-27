@@ -22,8 +22,9 @@
     display: flex;
     flex-wrap: wrap;
 }
+
 .Product{
-    width: 280px;
+    width: 250px;
     border: 1px solid #cecece;
     border-radius: 5px;
     text-align: center;
@@ -36,8 +37,8 @@
 
 .Product:hover {
     background-color: #2b3039;
-  -webkit-transform: scale(1);
-          transform: scale(1);
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
   cursor: pointer;
 }
 .Product > .ProductImage{
@@ -65,33 +66,21 @@ color: #fe8033;
 .btnP {
     width: 130px;
     height: 35px;
-    font-size: 12px;
+    font-size: 16px;
     border-radius: 35px;
-    background-color: #2d343e;
-    color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    -webkit-transition: background-color .3s ease;
-    transition: background-color .3s ease;
-  
-    margin-left: 55px;
-
-    display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+    background-color: #22402b;
+    color: white;
+    cursor: pointer;  
+    margin-left: 43px;
   }
 
 
   .Product:hover .ProductDetails .btnP{
-    background-color: #fe8033;
+    background-color: #483D8B;
     font-size: 18px;
     font-weight: 200;
     color: #fff;
+    text-align: center;
   }
   .Product:hover .ProductDetails .priceP{
     font-size: 17px;
@@ -154,6 +143,7 @@ color: #fe8033;
     color: white;
 }
 .FilterButton:hover{
-    background-color: black;
+    background-color: #483D8B
+    ;
     color: white;
 }

@@ -19,11 +19,7 @@ const ShopStore = () => {
                 <Route path="/" exact component={Products} />
                 <Route path="/products" exact component={Products} />
                 <Route path="/products/:slug" exact component={Products} />
-                
-               {/**
-                
-                <Route path="/manageproducts" exact component={ProductsScreen} /> 
-                 */}             
+                <Route path="/manageproducts" exact component={ProductsScreen} />             
                 <Route path="/products/:category/:slug" component={ProductDetails} />
             </Switch>
         </React.Fragment>

@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import {usePath} from 'hookrouter'
 
 import {listCategories, listProducts} from '../../../store/actions/productActions'
+import {MdpButton} from '../../UI/MdpStyledComponents'
+
 
 
 const Products = (props) => {
@@ -21,9 +23,6 @@ const Products = (props) => {
     const {categories} = categoryList
     const url = usePath()
     const dispatch = useDispatch()
-
-    console.log("##########################this the slug: "+slug)
-    console.log("##########################this the path: "+url)
     
     useEffect(() => {
               
@@ -48,7 +47,7 @@ const Products = (props) => {
                         <div className="Filter">
                             <p className="FilterTitle">Categories</p>
                             <ul>
-                                {
+                                {categories &&
                                     categories.map((value) => ( 
                                     <li key={value._id}>
                                     <Link to={`/products/${value.slug}`} onClick={() => {
@@ -69,10 +68,10 @@ const Products = (props) => {
        
                             <p className="FilterTitle">Prix</p>
                             <div>
-                                <button onClick={() => setFilter(1)} className="FilterButton">Tri croissant</button>
+                                <MdpButton outline mdpXLTRI onClick={() => setFilter(1)} >Tri croissant</MdpButton>
                             </div>
                             <div>
-                                <button onClick={() => setFilter(-1)} className="FilterButton">Tri décroissant</button>
+                                <MdpButton outline mdpXLTRI onClick={() => setFilter(-1)}>Tri décroissant</MdpButton>
                             </div>
                             
                         </div>
