@@ -245,7 +245,7 @@ const ProductsScreen = (props) => {
             {listOfProducts.map((product) => (
               <tr key={product._id}>
                 <td>{product.name}</td>
-                <td><img src={product.imageUrl} alt="" height="50" width="40"/> </td>
+                <td><img style={{ boxShadow: "2px 1px rgba(0, 0, 255, .2)"}} src={product.imageUrl} alt="" height="50" width="40"/> </td>
                 <td>{product.description.length > 20 ? product.description.substring(0, 20) + "..." : product.description}</td>
                 <td>{product.price}€ </td>
                 <td>{product.stock} </td>

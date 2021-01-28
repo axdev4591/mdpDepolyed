@@ -9,15 +9,6 @@ const Product = props => {
     //const url = path === '/' ? '/products/all' : path
     const url = '/products/all'
   
-{/** <div className="Product">
-    <div className="ProductImage">
-        <img  src={props.imageUrl} alt="" />
-    </div>
-    <div className="ProductDetails">
-        <p>{props.name} {console.log("imageurl :"+props.imageUrl)}</p>
-        <p>{props.price}€</p>
-    </div>
-</div>*/}
     
     return (
         <Link to={`${url}/${props.slug}`}>         
@@ -26,11 +17,11 @@ const Product = props => {
                     <img  src={props.imageUrl} alt="" />
                 </div>
                 <div className="ProductDetails">
-                    <p className="nameP" style={{fontSize: "21px"}}>{props.name}</p>
-                    <p style={{marginTop: "14px"}} className="priceP">{props.price}<span>€</span></p>
-                    <p style={{marginTop: "7px", flexDirection: "column"}} className="btnP">
+                    <p className="nameP">{props.name}</p>
+                    <p className="priceP">{props.price}<span>€</span></p>
+                    <button className="btnP">
                        Ajouter
-                    </p>
+                    </button>
                 </div>
             </div>
         </Link>

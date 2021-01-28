@@ -28,7 +28,7 @@
     border: 1px solid #cecece;
     border-radius: 5px;
     text-align: center;
-    margin: 0 1px 10px 0; /*changer le 1px à 10px pour pc windows mini*/
+   /* margin: 0 1px 10px 0; changer le 1px à 10px pour pc windows mini*/
     -webkit-transform: scale(0.8);
           transform: scale(0.8);
   -webkit-transition: all .3s ease-in-out;
@@ -61,32 +61,44 @@
 .priceP {
 font-size: 16px;
 color: #fe8033;
+margin-top: 7px;
 } 
+
+.nameP {
+    font-size: 19px;
+    } 
 
 .btnP {
     width: 130px;
     height: 35px;
-    font-size: 16px;
     border-radius: 35px;
-    background-color: #22402b;
-    color: white;
-    cursor: pointer;  
-    margin-left: 43px;
+    font-family: 'Avenir';
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 2px 1px rgba(0, 0, 255, .2);
+    border: 1px solid #22402b;
+    color: #22402b;
+    vertical-align: middle;
+    text-align: center;
+    margin-top: 7px;
+
   }
 
 
   .Product:hover .ProductDetails .btnP{
-    background-color: #483D8B;
+    background-color: #22402b;
     font-size: 18px;
     font-weight: 200;
     color: #fff;
     text-align: center;
+    border: 1px solid #22402b;
   }
   .Product:hover .ProductDetails .priceP{
     font-size: 17px;
   }
   .Product:hover .ProductDetails .nameP{
-    font-size: 18px;
+    font-size: 23px;
     font-weight: 200;
     color: #fff;
   }

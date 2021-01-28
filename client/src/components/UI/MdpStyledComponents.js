@@ -39,6 +39,25 @@ ${props => props.mdpXL && css`
     }
   `}
 
+  ${props => props.mdpXLContact && css`
+    width: 190px;
+    height: 58px;
+    margin-bottom: 16px;
+    padding: 0 6px;
+    border-radius: 5px;
+    box-shadow: 2px 1px rgba(0, 0, 255, .2);
+    border: 1px solid ${colors.primary};
+    color: ${colors.primary};
+
+`};
+
+${props => props.mdpXLContact && css`
+    &:hover {
+        background: ${colors.primary}; 
+        color: ${colors.white};
+    }
+  `}
+
   ${props => props.mdpXLTRI && css`
     width: 95%;
     margin: 2px 5px;
@@ -117,119 +136,15 @@ ${props => props.mdpDelete && css`
 `
 
 
-export const MdpSearchbar = styled.div`
-  height: 48px;
-  width: 700px;
-  position: relative;
-  margin: 0 24px;
-  input {
-    height: 48px;
-    padding: 0 64px;
-    width: 700px;
-    border-radius: ${props => props.squared ? "0px" : "100px"};
-    border: none;
-    font-size: 14px; 
-    position: relative;
-    outline: none;
-    color: ${colors.black};
-    &::placeholder {
-      color: ${colors.gray}
-    }
-  }
-  img {
-    position: absolute;
-    top: 50%;
-    left: 24px;
-    transform: translateY(-50%);
-    z-index: 9;
-    width: 16px;
-    height: 16px;
-  }
+//Icons
+export const MdpIcon = styled.i`
+font-size: 18px;
+margin-right: 16px;
 `
 
-export const MdpBtn = styled.button`
+//Form 
 
-height:48px;
-line-height:48px;
-padding: 0 64px;
-font-weight:600;
-border-radius: 100px;
-color: ${colors.black};
-background: ${colors.white};
-cursor: pointer;
-margin: 0 24px;
-font-size: 14px;
-text-decoration: none;
-
-  ${props => props.outline && css`
-    background: transparent;
-    border: 1px solid ${colors.black};
-  `}:hover{
-    font-size:18px;
-    opacity:0.5;
-}
-
-${props => props.primary && css`
-    background: transparent;
-    border: 1px solid ${colors.black};
-  `}:hover{
-    font-size:18px;
-    opacity:0.5;
-}
-
-${props => props.outline && css`
-    background: transparent;
-    border: 1px solid ${colors.black};
-  `}:hover{
-    font-size:18px;
-    opacity:0.5;
-}
-
-@media(max-width:768px){
-    font-size:24px;
-}
-`
-
-export const MdpWrap = styled.div`
-
-width: 280px;
-border: 1px solid #cecece;
-border-radius: 5px;
-text-align: center;
-transition: all .3s ease-in-out;  
-margin: 0 1px 10px 0;
-color: ${props => props.color ? props.color : "white"};
-${props => props.primary && css `
-    font-size:48px;
-    color:yellow;
-`}:hover{
-background-color: #2b3039;
-  cursor: pointer;}
-@media(max-width:768px){
-    font-size:24px;
-}
-`
-/*
-
-
-import React, { useState } from 'react';
-import styled, { createGlobalStyle, css } from 'styled-components';
-
-const GlobalStyle = createGlobalStyle`
-  html {
-    height: 100%
-  }
-
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #f05053, #e1eec3);
-    height: 100%;
-    margin: 0;
-    color: #555;
-  }
-`;
-
-const sharedStyles = css`
+export const MdpSharedStyles = css`
   background-color: #eee;
   height: 40px;
   border-radius: 5px;
@@ -239,7 +154,7 @@ const sharedStyles = css`
   box-sizing: border-box;
 `;
 
-const StyledFormWrapper = styled.div`
+export const MdpStyledFormWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -247,9 +162,9 @@ const StyledFormWrapper = styled.div`
   padding: 0 20px;
 `;
 
-const StyledForm = styled.form`
+export const MdpStyledForm = styled.form`
   width: 100%;
-  max-width: 700px;
+  max-width: 400px;
   padding: 40px;
   background-color: #fff;
   border-radius: 10px;
@@ -257,20 +172,20 @@ const StyledForm = styled.form`
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
 `;
 
-const StyledInput = styled.input`
+export const MdpStyledInput = styled.input`
   display: block;
   width: 100%;
-  ${sharedStyles}
+  ${MdpSharedStyles}
 `;
 
-const StyledTextArea = styled.textarea`
+export const MdpStyledTextArea = styled.textarea`
   background-color: #eee;
   width: 100%;
   min-height: 100px;
   resize: none;
-  ${sharedStyles}
+  ${MdpSharedStyles}
 `;
-const StyledButton = styled.button`
+export const MdpStyledButton = styled.button`
   display: block;
   background-color: #f7797d;
   color: #fff;
@@ -283,7 +198,7 @@ const StyledButton = styled.button`
   box-sizing: border-box;
 `;
 
-const StyledFieldset = styled.fieldset`
+export const MdpStyledFieldset = styled.fieldset`
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
@@ -302,117 +217,14 @@ const StyledFieldset = styled.fieldset`
   }
 `;
 
-const StyledError = styled.div`
+export const MdpStyledError = styled.div`
   color: red;
   font-weight: 800;
   margin: 0 0 40px 0;
 `;
 
-const initalState = {
-  name: '',
-  email: '',
-  message: '',
-  gender: ''
-};
 
-function App() {
-  const [state, setState] = useState(initalState);
-  const [error, setError] = useState('');
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log('submitted!');
-    console.log(state);
-
-    for (let key in state) {
-      if (state[key] === '') {
-        setError(`You must provide the ${key}`)
-        return
-      }
-    }
-    setError('');
-    // const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    // const test = regex.test(state.email);
-    // console.log(test);
-
-    console.log("Succeeded!!!")
-  };
-
-  const handleInput = e => {
-    const inputName = e.currentTarget.name;
-    const value = e.currentTarget.value;
-
-    setState(prev => ({ ...prev, [inputName]: value }));
-  };
-
-  return (
-    <>
-      <GlobalStyle />
-      <StyledFormWrapper>
-        <StyledForm onSubmit={handleSubmit}>
-          <h2>Contact Form</h2>
-          <label htmlFor="name">Name</label>
-          <StyledInput
-            type="text"
-            name="name"
-            value={state.name}
-            onChange={handleInput}
-          />
-          <label htmlFor="email">Email</label>
-          <StyledInput
-            type="email"
-            name="email"
-            value={state.email}
-            onChange={handleInput}
-          />
-          <StyledFieldset>
-            <legend>Gender</legend>
-            <label>
-              <input
-                type="radio"
-                value="female"
-                name="gender"
-                checked={state.gender === 'female'}
-                onChange={handleInput}
-              />
-              Female
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="male"
-                name="gender"
-                checked={state.gender === 'male'}
-                onChange={handleInput}
-              />
-              Male
-            </label>
-          </StyledFieldset>
-          <label htmlFor="message">Message</label>
-          <StyledTextArea
-            name="message"
-            value={state.message}
-            onChange={handleInput}
-          />
-          {error && (
-            <StyledError>
-              <p>{error}</p>
-            </StyledError>
-          )}
-          <StyledButton type="submit">Send Message</StyledButton>
-        </StyledForm>
-      </StyledFormWrapper>
-    </>
-  );
-}
-
-export default App;
-
-
-
-
-
-
+/*
 
 
 props.theme.primary.baseColor};

@@ -8,6 +8,7 @@ import {usePath} from 'hookrouter'
 
 import {listCategories, listProducts} from '../../../store/actions/productActions'
 import {MdpButton} from '../../UI/MdpStyledComponents'
+import Widget from '../../Widgets/Widget'
 
 
 
@@ -64,7 +65,7 @@ const Products = (props) => {
                             </ul>
                         </div>
                         
-                        <div className="Filter">
+                        <div className="Filter" style={{marginBottom: "6px"}}>
        
                             <p className="FilterTitle">Prix</p>
                             <div>
@@ -75,6 +76,7 @@ const Products = (props) => {
                             </div>
                             
                         </div>
+                        <Widget/>
                     
                     </div>
                     
