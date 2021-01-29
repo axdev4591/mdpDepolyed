@@ -60,7 +60,6 @@ const reducer = combineReducers({
 });
 
 
-//const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducer,
   initialState,
@@ -70,16 +69,16 @@ const store = createStore(
 
 window.store = store;
 
-function App() {
+function App(props) {
 
   return (
 
     <Provider store={store}>
       <Router>
         <div className="App">
+
             <Switch>
-              
-      
+               
               
               <Route path="/login" component={Login} />  
               <Route path="/signup" component={Signup} />
@@ -103,11 +102,11 @@ function App() {
                  
                          
             </Switch>
-                     
+
         </div>
       </Router>
     </Provider>
-      
+
     
     
   );

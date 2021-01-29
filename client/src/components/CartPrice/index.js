@@ -3,6 +3,8 @@ import './style.css';
 import  { Redirect } from 'react-router-dom'
 import { addToCart, updateCart, getCartItems} from '../../store/actions/cartActions'
 import { useDispatch, useSelector } from 'react-redux'
+import {MdpButton} from '../../components/UI/MdpStyledComponents'
+
 
 
 
@@ -47,8 +49,8 @@ const CartPrice = (props) => {
                         <h4>Total à Payer</h4>
                         <h4>{totalAmount}€</h4>
                     </div>
-                    <div className="PlaceOrder">
-                        <button className="PlaceOrderButton" onClick={() => props.red.history.push('/place-order')}>Passer la commande</button>
+                    <div className="Row" style={{marginLeft: "48px", marginTop: "63px"}}>
+                        <MdpButton outline mdpXLContact onClick={() => props.red.history.push('/place-order')}>Passer la commande</MdpButton>
                     </div>
                 </div>
                 

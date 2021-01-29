@@ -11,6 +11,8 @@ import {usePath} from 'hookrouter';
 //import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
 import { addToCart, updateCart, getCartItems } from '../../store/actions/cartActions'
 
+import {MdpButton} from '../../components/UI/MdpStyledComponents'
+
 const ProductDetails = (props) => {
   const userSignin = useSelector((state) => state.userSignin)
   const { userInfo } = userSignin
@@ -68,17 +70,17 @@ const ProductDetails = (props) => {
                 <div style={{marginTop: "12px"}} className="ProductDetailsWrapper">
                     <div className="ProductDetailsImage">
                         <div className="ProductDetailsImageWrapper">
-                            <img src={product.imageUrl} alt="" />
+                            <img  src={product.imageUrl} alt="" />
                         </div>
-                        <div className="ActionButtonWrapper">
-                             <button  style={{marginRight: "6px"}} onClick={() => {
+                        <div className="mdpBtn">
+                             <MdpButton outline mdpXLContact  onClick={() => {
                                  addItemToCart(product)
                                 props.history.push('/cart')
                              } }>
                                 <i className="fas fa-shopping-cart" style={{marginRight: "3px"}}></i>
                                 &nbsp;
                                 Ajouter au panier
-                             </button>        
+                             </MdpButton>        
                         </div>
                         
                     </div>
@@ -104,10 +106,10 @@ const ProductDetails = (props) => {
                             </div>
                          
                         </div>
-                        <div style={{marginTop: "51px"}} className="ActionButtonWrapper">
-                        <button onClick={() => { if(userInfo){
+                        <div className="mdpBtn" style={{marginTop: "51px"}}>
+                        <MdpButton outline mdpXLContact onClick={() => { if(userInfo){
                                   }
-                                  }} style={{marginRight: "6px"}}><i className="fas fa-bolt" style={{marginRight: "3px"}}></i>&nbsp;Acheter maintenant</button>
+                                  }} style={{marginRight: "6px"}}><i className="fas fa-bolt" style={{marginRight: "3px"}}></i>&nbsp;Acheter maintenant</MdpButton>
                         </div>
                     </div>
                 </div>

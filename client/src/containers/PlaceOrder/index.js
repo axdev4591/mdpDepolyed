@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Axios from 'axios'
 import { addToCart, updateCart, getCartItems } from '../../store/actions/cartActions'
+import {MdpButton} from '../../components/UI/MdpStyledComponents'
 
 
 const PlaceOrder = (props) => {
@@ -247,7 +248,7 @@ const PlaceOrder = (props) => {
                                     {
                                         existingAddress ?
                                         <div className="DeliveryButtonContainer" >
-                                            <button onClick={confirmDeliveryAddress} className="DeliveryAddressButton">Livrer ici</button>
+                                            <MdpButton outline mdpXLContact onClick={confirmDeliveryAddress} className="DeliveryAddressButton">Livrer ici</MdpButton>
                                         </div> : null
                                     }
                                     

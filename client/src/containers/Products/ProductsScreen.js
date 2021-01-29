@@ -298,7 +298,7 @@ const ProductsScreen = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={
+          <MdpButton outline mdpXL onClick={
             (e) => { 
               e.preventDefault()
               setOpenDialog(false)
@@ -308,8 +308,8 @@ const ProductsScreen = (props) => {
               dispatch(listProducts(userInfo.token))
               }} color="primary">
             Non
-          </Button>
-          <Button onClick={
+          </MdpButton>
+          <MdpButton outline mdpXL onClick={
             (e) => {
               e.preventDefault()
               setOpenDialog(false)
@@ -319,7 +319,7 @@ const ProductsScreen = (props) => {
               dispatch(listProducts(userInfo.token))
               }} color="primary">
             Oui
-          </Button>
+          </MdpButton>
         </DialogActions>
       </Dialog>
     </div>) }

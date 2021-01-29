@@ -8,6 +8,8 @@ import CartPrice from '../../components/CartPrice';
 import { addToCart, updateCart, getCartItems} from '../../store/actions/cartActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route , withRouter} from 'react-router-dom'
+import {MdpButton} from '../../components/UI/MdpStyledComponents'
+
 
 
 const Cart = (props) => {
@@ -120,7 +122,7 @@ const Cart = (props) => {
                             }
 
                             <div className="PlaceOrder">
-                                <button className="PlaceOrderButton" onClick={() => props.history.push('/')}>Poursuivre mes achats</button>
+                                <MdpButton outline mdpXLContact onClick={() => props.history.push('/')}>Poursuivre mes achats</MdpButton>
                             </div>
 
                         </div>

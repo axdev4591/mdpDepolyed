@@ -166,9 +166,8 @@ exports.getAddress = (req, res, next) => {
 
 }
 
-
 exports.login = (req, res, next) => {
-    console.dir(req.body);
+    console.dir(req.body)
     console.log(" is email in body? " +req.body.email)
     console.log("don thningk "+ req.body)
     User.findOne({email: req.body.email})

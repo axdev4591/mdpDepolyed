@@ -48,6 +48,7 @@ ${props => props.mdpXL && css`
     box-shadow: 2px 1px rgba(0, 0, 255, .2);
     border: 1px solid ${colors.primary};
     color: ${colors.primary};
+    font-size: 12px;
 
 `};
 

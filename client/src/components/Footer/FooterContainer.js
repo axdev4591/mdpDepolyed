@@ -35,7 +35,7 @@ export default function FooterContainer() {
             </Footer.Row>
             </Footer.Wrapper>
                 <p style={{color: "white", textAlign: "center", fontFamily: 'Avenir'}}>
-               CopyRight MendPress &copy; 2020, 255 avenue de la renaissance Paris 75013 France
+               CopyRight MendPress &copy; 2021, 255 avenue de la renaissance Paris 75013 France
                </p>
         </Footer>
     )

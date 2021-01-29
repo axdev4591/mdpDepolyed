@@ -12,8 +12,6 @@ import Contact from './Contact/Contact'
 
 const ShopStore = () => {
 
-    const [categoryTitle, setCategoryTitle] =  useState('Products')
-
     return (
         <React.Fragment>
             <Header/>

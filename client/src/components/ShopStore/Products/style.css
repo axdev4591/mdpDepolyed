@@ -27,6 +27,7 @@
     width: 250px;
     border: 1px solid #cecece;
     border-radius: 5px;
+    box-shadow: 2px 1px rgba(0, 0, 255, .2);
     text-align: center;
    /* margin: 0 1px 10px 0; changer le 1px à 10px pour pc windows mini*/
     -webkit-transform: scale(0.8);

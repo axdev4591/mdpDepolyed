@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './style.css';
 import {
     clearCart } from '../../../store/actions/cartActions'
+import {MdpButton} from '../../../components/UI/MdpStyledComponents'
 
 
 const CartItem = (props) => {
@@ -44,9 +45,9 @@ const CartItem = (props) => {
                     increaseQuantity={props.increaseQuantity}
                     decreaseQuantity={props.decreaseQuantity}
                 />
-                <button type="button" className="btn" onClick={() => removeFromCartHandler()} >
+                <MdpButton style={{marginTop: "15px"}} outline mdpXL  onClick={() => removeFromCartHandler()} >
                  Supprimer
-                 </button>
+                 </MdpButton>
             </div>
         </div>
     )

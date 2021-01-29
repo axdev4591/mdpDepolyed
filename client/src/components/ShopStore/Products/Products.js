@@ -9,6 +9,7 @@ import {usePath} from 'hookrouter'
 import {listCategories, listProducts} from '../../../store/actions/productActions'
 import {MdpButton} from '../../UI/MdpStyledComponents'
 import Widget from '../../Widgets/Widget'
+import IdleTimerContainer from '../../../containers/IdleTimerContainer/IdleTimerContainer'
 
 
 
@@ -101,7 +102,11 @@ const Products = (props) => {
                     </div>
 
                 </div>
-            </div>
+            
+                <IdleTimerContainer  idle={props} >
+                </IdleTimerContainer>    
+        </div>
+
         
     )
     

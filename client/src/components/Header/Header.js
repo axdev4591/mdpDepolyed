@@ -24,7 +24,6 @@ const  Header = (props) =>  {
   }, [])
  
   const handleLogout = () => {
-        props.logout();
         dispatch(logout());
         props.history.push("/");
     }

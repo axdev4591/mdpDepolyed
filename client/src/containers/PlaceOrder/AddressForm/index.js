@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import NormalInput from '../../../components/UI/NormalInput';
 import './style.css'
-
+import {MdpButton} from '../../../components/UI/MdpStyledComponents'
 
 const AddressForm = props =>  {
 
@@ -84,10 +84,10 @@ const AddressForm = props =>  {
                     </div>
     
 
-                    <div className="Row">
-                    <div className="ActionButtonWrapper">
-                        <button>Sauvegarder</button>
-                    </div>
+                    <div className="Row" style={{textAlign: "center"}}>
+                        <div className="ActionButtonWrapper">
+                        <MdpButton outline mdpXLContact >Sauvegarder</MdpButton>
+                        </div>
                     </div>
 
             </form>
