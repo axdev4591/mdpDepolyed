@@ -109,7 +109,7 @@ const ProductDetails = (props) => {
                         <div className="mdpBtn" style={{marginTop: "51px"}}>
                         <MdpButton outline mdpXLContact onClick={() => { if(userInfo){
                                   }
-                                  }} style={{marginRight: "6px"}}><i className="fas fa-bolt" style={{marginRight: "3px"}}></i>&nbsp;Acheter maintenant</MdpButton>
+                                  }} style={{marginRight: "6px"}}><i className="fas fa-heart" style={{marginRight: "3px", color:"red"}}></i>&nbsp;Acheter maintenant</MdpButton>
                         </div>
                     </div>
                 </div>

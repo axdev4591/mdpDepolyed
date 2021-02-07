@@ -102,9 +102,7 @@ const Products = (props) => {
                     </div>
 
                 </div>
-            
-                <IdleTimerContainer  idle={props} >
-                </IdleTimerContainer>    
+               
         </div>
 
         

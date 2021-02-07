@@ -3,6 +3,8 @@ import './style.css';
 import React, { useEffect } from 'react'
 import { logout, update } from '../../../store/actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
+import IdleTimerContainer from '../../../containers/IdleTimerContainer/IdleTimerContainer'
+
 
 
 const TopHeader = (props) => {
@@ -49,6 +51,8 @@ const TopHeader = (props) => {
                     <i className="fab fa-youtube"></i>
                 </ul>
                 </div>
+                <IdleTimerContainer  idle={props} >
+                </IdleTimerContainer> 
                 <div>
                     <ul className="TopMenu">
                         <li className="MenuItem">

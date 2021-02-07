@@ -34,6 +34,9 @@ const ProductsScreen = (props) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItem, setDeleteItem] = useState(false);
   const [delProduct,  setDelProduct] = useState(null)
+  const [listOfProducts,  setListOfProducts] = useState(null)
+
+  
 
   const userSignin = useSelector(state => state.userSignin);
   const {userInfo, error } = userSignin
@@ -66,6 +69,8 @@ const ProductsScreen = (props) => {
     }
     dispatch(listProducts('', 1))
     dispatch(listCategories())
+    setList()
+
   }, [successSave, successDelete])
 
   const openModal = (product) => {
@@ -95,6 +100,9 @@ const ProductsScreen = (props) => {
         create
       }, userInfo.token)
     )
+    dispatch(listCategories())
+    dispatch(listProducts('', 1))
+    setList()
     console.log("category: "+category)
   }
 
@@ -106,25 +114,37 @@ const ProductsScreen = (props) => {
   const deleteHandler = () => {
 
     console.log(JSON.stringify(delProduct))
-
     dispatch(deleteProduct(delProduct))
     setDelProduct(null)
+    dispatch(listCategories())
+    dispatch(listProducts('', 1))
+    setList()
   
   }
 
 
-  var listOfProducts = []
-  products.map((produit) => {
 
-      categories.map((cat) => {
-        if (cat._id == produit.category){
-          produit["category"] = cat.name
-          listOfProducts.push(produit)
-        }
-      })
-    })
+    const setList = () => {
 
-    console.log(JSON.stringify(listOfProducts))
+      var listOfProd = []
+      products.map((produit) => {
+        console.log("insde "+produit)
+    
+    
+          categories.map((cat) => {
+            if (cat._id == produit.category){
+              produit["category"] = cat.name
+              listOfProd.push(produit)
+              console.log("insde 2"+listOfProd)
+    
+            }
+          })
+        })
+
+      setListOfProducts(listOfProd)
+    }
+
+
   
   return (
     <div className="Content">
@@ -139,7 +159,8 @@ const ProductsScreen = (props) => {
          Ajouter
         </MdpButton>
       </div>
-    {modalVisible && (
+
+      {modalVisible && (
         <div className="form">
           <form  onSubmit={submitHandler}>
             <ul className="form-container">
@@ -147,8 +168,8 @@ const ProductsScreen = (props) => {
                 <h2>Créer un produit</h2>
               </li>
               <li>
-                {/* loadingSave && <div>Loading...</div> */}
-                {/* errorSave && <div>{errorSave}</div> */}
+                { loadingSave && <div style={{color: "green"}}>Loading...</div> }
+                { errorSave && <div style={{color: "red"}}>{errorSave}</div> }
               </li>
 
               <li>
@@ -227,6 +248,78 @@ const ProductsScreen = (props) => {
         </div>
       )} 
 
+       {openDialog && (
+       <div style={{marginBottom: "8px"}} className="form">
+       <div className="dial">
+         <ul className="form-container">
+           <li style={{textAlign: "center"}}>
+             <h2>Suppression d'un produit</h2>
+           </li>
+           <li>
+             { loadingDelete && <div style={{color: "green"}}>Loading...</div> }
+             { errorDelete && <div style={{color: "red"}}>{errorDelete}</div> }
+           </li>
+
+           <li>
+
+          <div style={{display: "flex"}}>
+
+            <img style={{ boxShadow: "2px 1px rgba(0, 0, 255, .2)"}} src={delProduct.imageUrl} alt="" height="110" width="100"/>          
+            
+            <div className="ProductDetails">
+                  <p className="ProductTitle">{delProduct.name}</p>
+                  <p className="ProductPrice">{delProduct.price}€</p>
+            </div>
+
+          </div>
+
+          <div className="ProductDescription">
+              <h3 style={{marginTop: "17px"}}>Description</h3>
+              <div className="BreadCrumb">
+              <small>{delProduct.description}</small>
+              </div>
+
+              <h4 style={{marginTop: "18px"}}>Catégorie</h4>
+              <div className="BreadCrumb">
+              <small>      
+                <p>{delProduct.category}</p>
+              </small>
+              </div>
+              <h4 style={{marginTop: "18px"}}>NB</h4>
+              <div className="BreadCrumb">
+              <p style={{color: "red", fontSize: "12px"}}> Attention, la suppression est une action irreversible</p>
+              </div>
+            
+          </div>
+              
+           </li>
+           <li style={{flexDirection: "row"}}>
+           <MdpButton outline mdpXLContact style={{marginRight: "72px" }}
+               onClick={(e) => {
+                 e.preventDefault()
+                 setOpenDialog(false)
+                 dispatch(listCategories())
+                 dispatch(listProducts('', 1))
+               }}
+             >
+               Annuler
+             </MdpButton>
+             <MdpButton 
+              onClick={() => {
+                deleteHandler()
+                setOpenDialog(false)
+              }}
+             
+             outline mdpXLContact style={{marginLeft: "82px" }}>
+             <i className="fas fa-trash" style={{marginRight: "3px"}}></i>&nbsp;
+                supprimer
+             </MdpButton>
+           </li>
+         </ul>
+       </div>
+     </div>
+        )}
+
       <div className="product-list">
         <table className="table">
           <thead className="thead">
@@ -242,7 +335,8 @@ const ProductsScreen = (props) => {
             </tr>
           </thead>
           <tbody>
-            {listOfProducts.map((product) => (
+
+            {listOfProducts && listOfProducts.map((product) => (
               <tr key={product._id}>
                 <td>{product.name}</td>
                 <td><img style={{ boxShadow: "2px 1px rgba(0, 0, 255, .2)"}} src={product.imageUrl} alt="" height="50" width="40"/> </td>
@@ -256,6 +350,7 @@ const ProductsScreen = (props) => {
                   onClick={() => {
                     setCreate(false)
                     openModal(product)
+                    window.scrollTo(0, 0);
                   }}
                   >
                     Editer
@@ -267,6 +362,7 @@ const ProductsScreen = (props) => {
                     onClick={() => { 
                       setDelProduct(product)
                       setOpenDialog(true)
+                      window.scrollTo(0, 0);
                     }}
                   >
                     Supprimer
@@ -279,15 +375,21 @@ const ProductsScreen = (props) => {
       </div>
     </div>
   
-    { openDialog && (    
-    <div>
-      <Dialog
+</div>)
+            }
+
+
+
+
+export default ProductsScreen
+
+/** <Dialog
         open={openDialog}
         TransitionComponent={Transition}
         keepMounted
-        onClose={(e) => {
-          e.preventDefault()
-         setOpenDialog(false)}}
+        onClose={() => {
+         setOpenDialog(false)
+        }}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
@@ -301,30 +403,25 @@ const ProductsScreen = (props) => {
           <MdpButton outline mdpXL onClick={
             (e) => { 
               e.preventDefault()
-              setOpenDialog(false)
               setDeleteItem(false)
               setDelProduct(null)
+              dispatch(listProducts('', 1))
               dispatch(listCategories())
-              dispatch(listProducts(userInfo.token))
+              setList()
+
               }} color="primary">
             Non
           </MdpButton>
           <MdpButton outline mdpXL onClick={
             (e) => {
               e.preventDefault()
-              setOpenDialog(false)
               setDeleteItem(true)
-              deleteHandler(e)
+              deleteHandler()
+              dispatch(listProducts('', 1))
               dispatch(listCategories())
-              dispatch(listProducts(userInfo.token))
-              }} color="primary">
+              setList()
+               }} color="primary">
             Oui
           </MdpButton>
         </DialogActions>
-      </Dialog>
-    </div>) }
-    </div>)
-            }
-
-
-export default ProductsScreen
+      </Dialog> */

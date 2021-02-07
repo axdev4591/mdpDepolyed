@@ -3,12 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import IdleTimer from 'react-idle-timer'
 import { logout, update } from '../../store/actions/userActions';
 import {MdpButton} from '../../components/UI/MdpStyledComponents'
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
 
 
 
@@ -19,83 +13,79 @@ const IdleTimerContainer = (props) => {
     const { loading, userInfo, error } = userSignin
     const dispatch = useDispatch();
 
-    const [openDialog, setOpenDialog] = useState(false);
-    const [isIdle, SetIsIdle] = useState(false)
+    const [isIdle, setIsIdle] = useState(false)
+    const [seconds, setSeconds ] =  useState(20);
+    const [timer, setTimer] = useState(null)
+    
+    /*
+    useEffect(()=>{
+    let myInterval = setInterval(() => {
+            if (seconds > 0) {
+                setSeconds(seconds - 1);
+            }
+            if (seconds === 0) {
+                clearInterval(myInterval)
+       
+            } 
+        }, 1000)
 
+        return () => clearInterval(myInterval);
+        
+    }, [])
+      */
 
+ 
     const onIdle =  () => {
 
+/*
+      if(userInfo){
 
+        setIsIdle(true)
+        let myInterval = setInterval(() => {
+          if (seconds > 0) {
+              setSeconds(seconds - 1);
 
-     /*   if(userInfo){
-            //setOpenDialog(true)
+          }
+          if (seconds === 0) {
+              clearInterval(myInterval)
+              dispatch(logout());
+              props.idle.history.push("/");
+     
+          }
+      }, 1000)
 
-            if(isIdle){
-
-            dispatch(logout());
-            props.idle.history.push("/");
-            console.log("************ User  is idle ************")
-            }
+      setTimer(myInterval)
 
                      
         }else{
        
             console.log("************ User not connected ************")
-            
-        
+      
       }*/
     
     }
-
   
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-      })
-
-
 
     return (
       <div>
           <IdleTimer ref={idleTimerRef} timeout = {5 * 1000} onIdle={onIdle}>
-          </IdleTimer>
-          { openDialog && (    
-    <div>
-      <Dialog
-        open={openDialog}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={(e) => {
-          e.preventDefault()
-         setOpenDialog(false)}}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle id="alert-dialog-slide-title">{"Déconnexion en cours..."}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-              Vous êtes inatif depuis un moment, pour des raisons de sécurité nous allons vous déconnecter dans 20s
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <MdpButton outline mdpXL onClick={
-            (e) => { 
-              e.preventDefault()
-              SetIsIdle(false)
-              setOpenDialog(false)
+               {isIdle && <div style={{display:"flex"}}>
+               <p style={{color: "red", fontSize: "17px", marginRight:"6px"}} >Vous serez déconnecter dans 00:{seconds}s..  </p>
+               <MdpButton 
+                onClick={() => {
+                  clearInterval(timer)
+                  setIsIdle(false)
+                  setSeconds(20)             
+                }}
+             
+             outline mdpXL >
+                Annuler
+             </MdpButton>
+               </div>
+               
 
-              }} >
-            Rester
-          </MdpButton>
-          <MdpButton outline mdpXL onClick={
-            () => {
-                SetIsIdle(true)
-                setOpenDialog(false)
-              }} >
-             Déconnecter
-          </MdpButton>
-        </DialogActions>
-      </Dialog>
-    </div>) }
+               }
+          </IdleTimer>
       </div>
       
     )

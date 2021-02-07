@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
-const authenticate = require('./api/middleware/authenticate');
 const path = require('path')
 const bodyParser = require('body-parser');
 const config =  require('./config')

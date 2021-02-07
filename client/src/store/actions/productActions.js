@@ -43,6 +43,7 @@ import {
           }
           catch (error) {
             dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message })
+            console.log("problème de récupération des catégories "+error)
           }
         }
         else{
@@ -59,6 +60,7 @@ import {
           console.log("\n\n")
           }catch (error) {
             dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message })
+            console.log("problème de récupération des catégories "+error)
           }
         }
 
@@ -78,7 +80,7 @@ import {
       dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data.message })
     } catch (error) {
       dispatch({ type: CATEGORY_LIST_FAIL, payload: error.message })
-      console.log(error.message)
+      console.log("problème de récupération des catégories "+error.message)
     }
   }
 

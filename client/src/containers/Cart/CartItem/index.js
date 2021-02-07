@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import QuantityControl from '../../../components/QuantityControl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,6 +6,8 @@ import './style.css';
 import {
     clearCart } from '../../../store/actions/cartActions'
 import {MdpButton} from '../../../components/UI/MdpStyledComponents'
+import { addToCart, updateCart, getCartItems} from '../../../store/actions/cartActions'
+
 
 
 const CartItem = (props) => {
@@ -13,6 +15,17 @@ const CartItem = (props) => {
     const dispatch = useDispatch();
     const userSignin = useSelector(state => state.userSignin);
     const { loading, userInfo, error } = userSignin;
+
+    const cart = useSelector(state => state.cart);
+   const { cartItem, totalAmount, cartCount} = cart
+
+
+    useEffect(() => {
+
+        if(userInfo){
+            dispatch(getCartItems(userInfo))
+        }
+      }, [props])
 
     const removeFromCartHandler = () => {
         const product = {
@@ -22,6 +35,8 @@ const CartItem = (props) => {
 
                     }
         dispatch(clearCart(userInfo, product));
+        dispatch(getCartItems(userInfo))
+
       }
 
 
