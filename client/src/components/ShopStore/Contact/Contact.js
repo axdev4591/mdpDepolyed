@@ -49,7 +49,7 @@ const Contact = (props) => {
       <MdpStyledFormWrapper>
         
         <MdpStyledForm onSubmit={handleSubmit}>
-          <h2>Contact Form</h2>
+          <h2>Formulaire de contact</h2>
           <label htmlFor="name">Nom</label>
           <MdpStyledInput
             type="text"
@@ -65,7 +65,7 @@ const Contact = (props) => {
             onChange={handleInput}
           />
           <MdpStyledFieldset>
-            <legend>Gender</legend>
+            <legend>Genre</legend>
             <label>
               <input
                 type="radio"

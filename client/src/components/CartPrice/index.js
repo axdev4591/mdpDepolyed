@@ -27,6 +27,15 @@ const CartPrice = (props) => {
 
   }, [])
 
+  const placeOrderNow  = () => {
+    if(!userInfo){
+        props.history.push('/login');
+        return;
+    }else{
+        props.red.history.push('/place-order')
+    }
+    } 
+
 
     return (
         <div className="PriceWrapper">
@@ -50,7 +59,7 @@ const CartPrice = (props) => {
                         <h4>{totalAmount}€</h4>
                     </div>
                     <div className="Row" style={{marginLeft: "48px", marginTop: "63px"}}>
-                        <MdpButton outline mdpXLContact onClick={() => props.red.history.push('/place-order')}>Passer la commande</MdpButton>
+                        <MdpButton outline mdpXLContact onClick={() => placeOrderNow()}>Passer la commande</MdpButton>
                     </div>
                 </div>
                 

@@ -15,7 +15,7 @@ import IdleTimerContainer from '../../../containers/IdleTimerContainer/IdleTimer
 
 const Products = (props) => {
 
-    const [title, setTitle] = useState('Toutes Nos Oeuvres')
+    const [title, setTitle] = useState('Les produits')
     const [slug, setSlug] = useState('')
     const [filter, setFilter] = useState(1)
     const productList = useSelector((state) => state.productList)

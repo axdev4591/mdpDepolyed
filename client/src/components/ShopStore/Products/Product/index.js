@@ -20,7 +20,7 @@ const Product = props => {
                     <p className="nameP">{props.name}</p>
                     <p className="priceP">{props.price}<span>€</span></p>
                     <button className="btnP">
-                       Ajouter
+                      Consulter
                     </button>
                 </div>
             </div>

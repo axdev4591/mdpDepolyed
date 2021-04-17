@@ -61,6 +61,27 @@ const ProductDetails = (props) => {
    
 }
 
+const acheterNow  = (product) => {
+
+    if(!userInfo){
+        props.history.push('/login');
+        return;
+    }else {
+        if(!userInfo.isAdmin){
+            const cartItem = {
+                user: userInfo.userId,
+                product: product._id,
+                name: product.name,
+                imageUrl: product.imageUrl,
+                quantity: 1,
+                price: product.price
+            }
+        
+           dispatch(addToCart(userInfo, cartItem))
+        }
+    } 
+}
+
 
     let productDescription
 
@@ -108,6 +129,8 @@ const ProductDetails = (props) => {
                         </div>
                         <div className="mdpBtn" style={{marginTop: "51px"}}>
                         <MdpButton outline mdpXLContact onClick={() => { if(userInfo){
+                                    acheterNow(product)
+                                    props.history.push('/place-order')
                                   }
                                   }} style={{marginRight: "6px"}}><i className="fas fa-heart" style={{marginRight: "3px", color:"red"}}></i>&nbsp;Acheter maintenant</MdpButton>
                         </div>

@@ -18,7 +18,9 @@ const MainHeader = (props) => {
             <div>
                 <div className="SearchOption">
                     <select>
-                        <option>Toutes les  Categories</option>
+                        <option>Catégories</option>
+                        <option></option>
+
                     </select>
                     <input type="text" />
                     <button>
