@@ -112,15 +112,16 @@ exports.getAllUser = (req, res, next) => {
 }
 
 exports.getAllOrders = (req, res, next) => {
+    console.log("&&&&&&&&&order for admin &&&&&&&&&&&&&&\n\n")
 
-    const userId = req.params.userId;
+
     Order.find()
     .select('address order orderDate paymentType paymentStatus isOrderCompleted')
     .populate('order.product', 'name imageUrl')
     .exec()
     .then(orders => {
 
-        UserAddress.findOne()
+        UserAddress.find()
         .exec()
         .then(userAddress => {
 
@@ -146,6 +147,7 @@ exports.getAllOrders = (req, res, next) => {
 
         })
         .catch(error => {
+            console.log("&&&&&&&&& error 500 can't get order 1 &&&&&&&&&&&&&&\n\n")
             return res.status(500).json({
                 error: error
             })
@@ -154,6 +156,7 @@ exports.getAllOrders = (req, res, next) => {
         
     })
     .catch(error => {
+        console.log("&&&&&&&&& error 500 can't get order 2 &&&&&&&&&&&&&&\n\n")
         res.status(500).json({
             error: error
         });

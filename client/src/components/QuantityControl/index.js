@@ -14,6 +14,7 @@ const QuantityControl = props => {
                     onChange={(e) => props.changeQuantity(e, props.productId)} 
                     name={props.name}
                     value={props.quantity == 0 ? 1 : props.quantity}
+                    disabled = {true}
                 />
             <button onClick={(e) => props.increaseQuantity(e, props.productId)
                 }>+</button>

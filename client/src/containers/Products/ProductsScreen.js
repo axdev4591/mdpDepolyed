@@ -25,7 +25,7 @@ const ProductsScreen = (props) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState(null);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('ebooks');
   const [stock, setStock] = useState('');
   const [description, setDescription] = useState('');
   const [slug, setSlug] = useState('');
@@ -81,19 +81,47 @@ const ProductsScreen = (props) => {
     setDescription(product.description);
     setSlug(product.slug)
     setImageUrl(product.imageUrl);
-    setCategory(product.category);
+
+    categories.map((cat) => {
+      if(cat.name==product.category){
+        setCategory(cat._id)
+
+      }}
+    )
     setStock(product.stock);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    console.log("aaaaa  aaaaaaaaaa"+category)
+    console.log("aaaaa "+JSON.stringify(categories))
+
+    var myCategory = ""
+
+    if(create){
+      categories.map((cat) => {
+        if(cat.name==category){
+          setCategory(cat._id)
+          myCategory = cat._id
+          console.log("aaaaa "+cat._id)
+  
+  
+        }}
+      )
+    }else{
+      myCategory = category
+    }
+
+   
+    console.log("aaaaa "+category + " "+myCategory)
     dispatch(
       saveProduct({
         _id: id,
         name,
         price,
         imageUrl,
-        category,
+        myCategory,
         stock,
         description,
         slug,
@@ -103,7 +131,7 @@ const ProductsScreen = (props) => {
     dispatch(listCategories())
     dispatch(listProducts('', 1))
     setList()
-    console.log("category: "+category)
+    console.log("aaaaa "+category + " "+myCategory)
   }
 
   //Dialog box for delete confirmation
@@ -253,7 +281,7 @@ const ProductsScreen = (props) => {
        <div className="dial">
          <ul className="form-container">
            <li style={{textAlign: "center"}}>
-             <h2>Suppression d'un produit</h2>
+             <h2>Information du produit</h2>
            </li>
            <li>
              { loadingDelete && <div style={{color: "green"}}>Loading...</div> }
@@ -365,7 +393,7 @@ const ProductsScreen = (props) => {
                       window.scrollTo(0, 0);
                     }}
                   >
-                    Supprimer
+                    Consulter  / Supprimer 
                   </MdpButton>
                 </td>
               </tr>

@@ -208,6 +208,7 @@ const PlaceOrder = (props) => {
         }else{
             getaddress = address
         }
+        //console.log("ahahahaha "+JSON.stringify(getaddress))
 
         return (
             <React.Fragment>
@@ -241,7 +242,7 @@ const PlaceOrder = (props) => {
                                                 key={address._id} 
                                                 onAddressSelection={addressSelector} 
                                                 value={selectedAddress}
-                                                address={getaddress} />
+                                                address={address} />
 
                                         )
                                     }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './style.css'
+import * as emailjs from 'emailjs-com'
 import {MdpStyledError, MdpStyledFieldset, MdpStyledButton, 
     MdpStyledTextArea, MdpStyledInput, MdpStyledForm, MdpStyledFormWrapper, MdpButton}
     from '../../UI/MdpStyledComponents'
@@ -16,6 +17,19 @@ const initalState = {
 const Contact = (props) => {
   const [state, setState] = useState(initalState);
   const [error, setError] = useState('');
+/*
+  let templateParams = {
+    from_name: email,
+    to_name: '<YOUR_EMAIL_ID>',
+    subject: subject,
+    message_html: message,
+   }
+   emailjs.send(
+    'gmail',
+    'template_XXXXXXXX',
+     templateParams,
+    'user_XXXXXXXXXXXXXXXXXXXX'
+   )*/
 
   const handleSubmit = e => {
     e.preventDefault();

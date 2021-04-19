@@ -95,6 +95,8 @@ import {
         if(userInfo.isAdmin){
         dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product })
         
+        console.log("ia sadmin &&&&&&& "+JSON.stringify(userInfo))
+
         const products = new FormData()
         products.append("id", product._id)
         products.append("name", product.name)
@@ -102,7 +104,9 @@ import {
         products.append("description", product.description)
         products.append("imageUrl", product.imageUrl)
         products.append("stock", product.stock)
-        products.append("category", product.category)
+        products.append("category", product.myCategory)
+
+        console.log("bbbbbbbb "+product.myCategory)
 
         if (product.create) {
             const { data } = await Axios.post(`${base_url}/products/create`, products, {

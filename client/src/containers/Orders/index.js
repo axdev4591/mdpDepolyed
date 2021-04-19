@@ -22,11 +22,11 @@ const Orders = (props) => {
         props.history.push('/login');
                  
     }else{
-       // if(userInfo.firstName == "admin"){
-         //   adminGetAllOrders()
-       // }else{
+        if(userInfo.isAdmin){
+            adminGetAllOrders()
+         }else{
             getOrders()
-        
+      }
     
     }
     return () => {
@@ -60,7 +60,22 @@ const Orders = (props) => {
     }
 
     /****get all orders for administration back office */
-    const adminGetAllOrders =  () => {
+    const adminGetAllOrders = async () => {
+
+        try{
+
+            const { data } = await Axios.get(`${base_url}/order/getorders`, {
+                headers: {
+                      Authorization: ' Bearer ' + userInfo.token
+                }
+            })
+            console.log("response All orders: "+JSON.stringify(data.message));
+            setOrderList(data.message)
+
+        }catch(error){
+            console.log(error);
+        }
+        /*
 
         fetch(`${base_url}/order/getusers`, {
             headers: {
@@ -94,7 +109,7 @@ const Orders = (props) => {
         })
         .catch(error => {
             console.log(error);
-        })
+        })*/
     }
     
 

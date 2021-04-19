@@ -13,16 +13,16 @@ exports.getToken = (user) => {
     },
     config.JWT_SECRET,
     {
-      expiresIn: '1h',
+      expiresIn: '48h',
     }
   )
 }
 
 exports.isAuth = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log("provided token:  \n\n")
+  console.log("provided token: \n")
   console.log(token)
-  console.log("provided token:  \n\n")
+  console.log("\n")
 
 
   if (token) {
