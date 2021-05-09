@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {base_url} from '../../constants/index'
 import Axios from 'axios'
+import {MdpButton} from '../../components/UI/MdpStyledComponents'
+
 
 
 
@@ -13,6 +15,15 @@ const Orders = (props) => {
   const userSignin = useSelector(state => state.userSignin);
   const { loading, userInfo, error } = userSignin
   const [ordersList, setOrderList] = useState([])
+  const [userList, setUserList] = useState([])
+  const [userIds, setUserIds] = useState([])
+  const [isOrderOpened, setIsOrderOpened] = useState(false)
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+
+
+
+
 
 
   useEffect(() => {
@@ -23,6 +34,7 @@ const Orders = (props) => {
                  
     }else{
         if(userInfo.isAdmin){
+            //getUsers()
             adminGetAllOrders()
          }else{
             getOrders()
@@ -45,23 +57,60 @@ const Orders = (props) => {
         console.log("responseorder: "+JSON.stringify(data.message));
         setOrderList(data.message)
 
-
-        /*
-        .then(response => response.json())
-        .then(jsonResponse => {
-            console.log("get orders: "+jsonResponse.message);
-            console.log("responseorder: "+JSON.stringify(jsonResponse.message));
-            
-            setOrderList(data.data.message)
-        })*/
     }catch(error){
             console.log(error);
         }
     }
 
+    const getOrdersAdmin = async (uid) => {
+        try{
+
+        const { data } = await Axios.get(`${base_url}/order/getorders/${uid}`, {
+            headers: {
+                  Authorization: ' Bearer ' + userInfo.token
+            }
+        })
+        console.log("responseorder: "+JSON.stringify(data.message));
+        setOrderList(data.message)
+
+    }catch(error){
+            console.log(error);
+        }
+    }
+
+    const getUsers = async () => {
+        console.log(userInfo)
+        try{
+
+            const { data } = await Axios.get(`${base_url}/order/getusers`, {
+                headers: {
+                      Authorization: ' Bearer ' + userInfo.token
+                }
+            })
+            console.log("responseuser: "+JSON.stringify(data.message));
+           /* var usersID = {}
+            var i = 0
+    
+            userList.map((user) => {
+
+                console.log("all user id: "+JSON.stringify(user))
+                usersID['_id'+i] = user._id
+                i += 1
+            })*/
+            setUserList(data.message)
+
+
+    
+        }catch(error){
+                console.log(error);
+            }
+
+    }
+
     /****get all orders for administration back office */
     const adminGetAllOrders = async () => {
-
+       // getUsers()
+        console.log("admin get orders")
         try{
 
             const { data } = await Axios.get(`${base_url}/order/getorders`, {
@@ -70,46 +119,12 @@ const Orders = (props) => {
                 }
             })
             console.log("response All orders: "+JSON.stringify(data.message));
-            setOrderList(data.message)
+            setUserList(data.message)
 
         }catch(error){
-            console.log(error);
+            console.log(error + "error front");
         }
-        /*
-
-        fetch(`${base_url}/order/getusers`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': userInfo.token
-            }
-        })
-        .then(response => response.json())
-        .then(jsonResponse => {
-           
-                jsonResponse.message.map(user => {
-                
-                fetch(`${base_url}/order/getorders/${user._id}`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'auth-token': userInfo.token
-                    }
-                })
-                .then(response => response.json())
-                .then(jsonResponse => {
-                    console.log("get all orders for admin: "+jsonResponse.message);
-                   
-                   // setOrderList( prevState => setOrderList( prevState.ordersList.concat(jsonResponse.message) ))
-                })
-                .catch(error => {
-                    console.log(error);
-                }) 
-            
-            })
-    
-        })
-        .catch(error => {
-            console.log(error);
-        })*/
+        
     }
     
 
@@ -134,14 +149,127 @@ const Orders = (props) => {
             <Header />
             <div className="Content">
                 <div className="Card">
-                    <p className="CardText">Mes Commandes</p>
+                   { userInfo.isAdmin ? <p className="CardText">Liste des commandes</p> : <p className="CardText">Mes Commandes</p>} 
 
                     {
-                        ordersList.map(order => {
+                      !userInfo.isAdmin && ordersList.map(order => {
                             return (
                                 <div key={order._id} className="Order">
                                     <div className="OrderHeader">
                                         <a href="#">{order._id}</a>
+                                    </div>
+                                    <div className="OrderDescription">
+                                        <div className="od1">
+                                            <p className="odtitle">Adresse de livraison</p>
+                                            <p>{`${order.address.address} ${order.address.cityDistrictTown} ${order.address.state} - ${order.address.pinCode}`}</p>
+                                        </div>
+                                        <div className="od2">
+                                            <p className="odtitle">Type de paiement</p>
+                                            <a className="odp" style={{color: "white"}}>{order.paymentType}</a>
+                                        </div>
+                                        <div className="od3">
+                                            <p className="odtitle" >Statut du paiement</p>
+                                            <a className="odp" style={{color: "white"}}>{order.paymentStatus}</a>
+                                        </div>
+                                        <div className="od3">
+                                            <p className="odtitle" >Statut de la livraison</p>
+                                            <a className="odp" style={{color: "white"}}>{ order.isOrderCompleted ? "livré le 12/01/2021" : order.paymentStatus }</a>
+                                        </div>
+                                    
+                                    </div>
+                                    <div>
+                                        {order.order.map(item => (
+                                            <div key={item._id} style={{display: 'flex', alignItems: 'center', margin: '5px 0', borderBottom: '1px solid #cecece'}}>
+                                                <div style={{width: '80px', height: '80px', overflow: 'hidden', position: 'relative'}} className="ImageContainer">
+                                                    <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={item.product.imageUrl}/>
+                                                </div>
+                                                <div>
+                                                    <p className="odtitle">{item.product.name}</p>
+                                                    <div style={{fontSize: '14px', color: '#555', fontWeight: 'bold'}}>
+                                                    <p>Quantité: {item.quantity}</p>
+                                                    <p>{item.price * item.quantity}€</p>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="OrderFooter">
+                                        <p>Commande passée le <span>{formatDate(order.orderDate)}</span></p>
+                                        <p>Total de la commande <span>{getOrderTotal(order._id)}€</span></p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    {
+                      userInfo.isAdmin && !isOrderOpened && userList.map(user => {
+                        if(!user.isAdmin){
+                            return (                               
+
+                                <div key={user._id} className="Order">
+                                    <div className="OrderHeader">
+                                        UID: <a href="#">{user._id}</a>
+                                    </div>
+                                    <div className="OrderDescription">
+                                    <div className="od1">
+                                            <p className="odtitle">Prenom</p>
+                                            <a className="odp" style={{color: "white"}}>{user.firstName}</a>
+
+                                    </div>
+                                    <div className="od1">
+                                            <p className="odtitle">Nom</p>
+                                            <a className="odp" style={{color: "white"}}>{user.lastName}</a>
+                                    </div>
+                                    <div className="od1" style={{marginRight: "5px"}}>
+                                            <p className="odtitle" >Email</p>
+                                            <a className="odp" style={{color: "white"}}>{user.email}</a>
+                                    </div>
+                                    <div className="od1">
+                                            <p className="odtitle" style={{marginRight: "20px"}}>Voir les commandes</p>
+                                                <MdpButton style={{float: "right"}} outline mdpXL onClick={() => {
+                                                           // setCreate(true)
+                                                           getOrdersAdmin(user._id)
+                                                           setFirstName(user.firstName)
+                                                           setLastName(user.lastName)
+                                                            setIsOrderOpened(true)
+                                                        } }
+                                                        >
+                                                        Consulter
+                                                </MdpButton>
+
+                                    </div>
+                                    
+                                    </div>
+                                    <div>
+                                    </div>
+                                    <div className="OrderFooter">
+                                        <p>Commande passée le </p>
+                                        <p>Total de la commande€</p>
+                                    </div>
+                                </div>
+                                 )
+                                }
+                        })
+                    }
+                    {
+                      userInfo.isAdmin && isOrderOpened && ordersList.map(order => {
+                            return (
+                                <div key={order._id} className="Order">
+                                    <div className="OrderHeader">
+                                    N° de la commande:  <a style={{marginRight: "10px"}} href="#">{order._id}</a>
+
+                                    Utilisateur: <a  className="odp" style={{color: "white"}}>{firstName} {lastName}</a>
+
+                                    <MdpButton style={{float: "right"}} outline mdpXL onClick={() => {
+                                                           setFirstName(" ")
+                                                           setLastName(" ")
+                                                            setIsOrderOpened(false) 
+                                                            adminGetAllOrders()                                                           
+                                                        } }
+                                                        >
+                                            Retour
+                                    </MdpButton>
                                     </div>
                                     <div className="OrderDescription">
                                         <div className="od1">

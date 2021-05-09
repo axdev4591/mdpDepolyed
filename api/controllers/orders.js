@@ -94,12 +94,14 @@ exports.getUserOrders = (req, res, next) => {
 
 exports.getAllUser = (req, res, next) => {
 
+    console.log("&&&&&&&&&order for users &&&&&&&&&&&&&&\n\n")
+
     User.find()
     .then(user => {
         res.status(200).json({
             message: user
         })
-        console.log(user)
+        //console.log(user)
     })
     .catch(error => {
         console.log("no user found")
@@ -110,57 +112,104 @@ exports.getAllUser = (req, res, next) => {
     })
 
 }
+exports.getUsersMiddleware = (req, res, next) => {
+
+    console.log("&&&&&&&&&order for users &&&&&&&&&&&&&&\n\n")
+
+    User.find()
+    .then(user => {
+        //res.locals.usersID = user
+        
+        console.log(user)
+        res.status(200).json({
+            message: user
+        })
+
+        //next()
+    })
+    .catch(error => {
+        console.log("no user found")
+        res.status(500).json({
+            error: error + "erroror"
+        })
+      
+    })
+
+}
 
 exports.getAllOrders = (req, res, next) => {
     console.log("&&&&&&&&&order for admin &&&&&&&&&&&&&&\n\n")
 
+    const usersID = res.locals.usersID
+    console.log("get users IDs "+JSON.stringify("users ids in admin "+usersID))
 
-    Order.find()
-    .select('address order orderDate paymentType paymentStatus isOrderCompleted')
-    .populate('order.product', 'name imageUrl')
-    .exec()
-    .then(orders => {
 
-        UserAddress.find()
-        .exec()
-        .then(userAddress => {
+    User.find()
+    .then(user => {
+        console.log(JSON.stringify(user))
+        user.map((us) => {
+            Order.find({"user": us._id})
+            .select('address order orderDate paymentType paymentStatus isOrderCompleted')
+            .populate('order.product', 'name imageUrl')
+            .exec()
+            .then(orders => {
+        
+                console.log("get user order"+us._id + "  "+orders)
+                UserAddress.findOne({"user": us._id})
+                .exec()
+                .then(userAddress => {
+        
+                    const orderWithAddress = orders.map(order => {
+                        const address = userAddress.address.find(userAdd => order.address.equals(userAdd._id));
+                        return {
+                            _id: order._id,
+                            order: order.order,
+                            address: address,
+                            orderDate: order.orderDate,
+                            paymentType: order.paymentType,
+                            paymentStatus: order.paymentStatus,
+                            isOrderComleted: order.isOrderComleted
+                        }
+                    });
+        
+                    res.status(200).json({
+                        message: orderWithAddress
+                    });
+                    console.log("order with adress: "+ orderWithAddress)
+        
+                })
+                .catch(error => {
+                    console.log("order error 500 1er:\n\n")
 
-            const orderWithAddress = orders.map(order => {
-                const address = userAddress.address.find(userAdd => order.address.equals(userAdd._id));
-                const user = User.findOne({_id: order.user});
-                return {
-                    _id: order._id,
-                    order: order.order,
-                    address: address,
-                    orderDate: order.orderDate,
-                    paymentType: order.paymentType,
-                    paymentStatus: order.paymentStatus,
-                    isOrderCompleted: order.isOrderCompleted,
-                    user: user 
-                }
+                    return res.status(500).json({
+                        error: error
+                    })
+                })
+        
+                
+            })
+            .catch(error => {
+                console.log("order error 500 2er:\n\n")
+                res.status(500).json({
+                    error: error
+                });
             });
-
-            res.status(200).json({
-                message: orderWithAddress
-            });
-            console.log("order with adress: "+ orderWithAddress)
-
-        })
-        .catch(error => {
-            console.log("&&&&&&&&& error 500 can't get order 1 &&&&&&&&&&&&&&\n\n")
-            return res.status(500).json({
-                error: error
+        
             })
         })
-
-        
-    })
     .catch(error => {
-        console.log("&&&&&&&&& error 500 can't get order 2 &&&&&&&&&&&&&&\n\n")
-        res.status(500).json({
-            error: error
-        });
-    });
+        console.log("order error 500 3er:\n\n")
+
+                console.log("no user found")
+                res.status(500).json({
+                    error: error
+                })
+                
+            })
+        
+     
+   
+  
 
 }
 
