@@ -8,6 +8,7 @@ import ProductDetails from '../../containers/ProductDetails/index'
 import ProductsScreen from '../../containers/Products/ProductsScreen'
 import Home from '../../containers/Home'
 import Contact from './Contact/Contact'
+import About from './About/About'
 
 
 const ShopStore = () => {
@@ -22,6 +23,8 @@ const ShopStore = () => {
                 <Route path="/manageproducts" exact component={ProductsScreen} />             
                 <Route path="/products/:category/:slug" component={ProductDetails} />
                 <Route path="/contact" exact component={Contact} />
+                <Route path="/About" exact component={About} />
+
             </Switch>
             <FooterContainer />
 

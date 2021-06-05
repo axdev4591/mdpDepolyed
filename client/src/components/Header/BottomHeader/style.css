@@ -49,3 +49,10 @@
 .Dropdown > li > ul > li > a:hover{
     text-decoration-line: underline;
 }
+
+.cat:hover {
+    color:#22402b
+}
+.cat {
+    color: green
+}

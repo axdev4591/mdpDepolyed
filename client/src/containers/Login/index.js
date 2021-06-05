@@ -43,7 +43,7 @@ const SigninScreen = (props) => {
         setErrorMessage('Invalid Email Address'); return;
     }
 
-    if(password === ''){
+    if(password === '' && password < 6){
         setIsError(true)
         setErrorMessage('Enter Password'); return;
     }

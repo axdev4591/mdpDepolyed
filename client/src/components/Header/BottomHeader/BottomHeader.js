@@ -31,8 +31,13 @@ const BottomHeader = (props) => {
         cate.map((value) => {
             categoriesAr.push(
                     <li key={value.slug} className="Column">
-                        <NavLink to={`/products/${value.slug}/1`}>{value.name}</NavLink>
-                        {value.children.length > 0 ? (<ul>{this.categoryTree(value.children)}</ul>) : null}
+                        <NavLink to={`/products/${value.slug}`} onClick={() => {
+                                             
+                                            // setSlug(value.slug)
+                                             //setTitle(value.name)
+             
+                                     } }><span className="cat">{value.name}</span>
+                                     </NavLink>
                     </li>
             )
         })
@@ -43,7 +48,7 @@ const BottomHeader = (props) => {
 
         const cat = categoryTree(categories);
     
-
+console.log("ajahahahaha: "+ cat)
         return (
             <div className="BottomHeader">
                 <ul className="Menu">
@@ -51,12 +56,13 @@ const BottomHeader = (props) => {
                     <li className="MenuItem">
                         <Link to="/products" className="MenuItemElement">Boutique&nbsp;<i className="fas fa-caret-down"></i></Link>
                         
-                        <ul className="Dropdown">
+                       {/**<ul className="Dropdown">
                         {cat}
                         
-                        </ul>
+                        </ul> 
+                                            <li className="MenuItem"><Link to="/products">Produits</Link></li>
+*/} 
                     </li>
-                    <li className="MenuItem"><Link to="/products">Produits</Link></li>
                     <li className="MenuItem"><Link to="/about">A propos</Link></li>
                     <li className="MenuItem"><Link to="/contact">Contact</Link></li>
                     
