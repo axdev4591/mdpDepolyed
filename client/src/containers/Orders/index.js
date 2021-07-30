@@ -22,10 +22,6 @@ const Orders = (props) => {
   const [lastName, setLastName] = useState("")
 
 
-
-
-
-
   useEffect(() => {
     
     if(!userInfo){
@@ -35,7 +31,7 @@ const Orders = (props) => {
     }else{
         if(userInfo.isAdmin){
             //getUsers()
-            adminGetAllOrders()
+            adminGetAllUsers()
          }else{
             getOrders()
       }
@@ -45,6 +41,7 @@ const Orders = (props) => {
     };
   }, []);
 
+    //get orders fir a specific user
      const getOrders = async () => {
         console.log(userInfo)
         try{
@@ -62,6 +59,7 @@ const Orders = (props) => {
         }
     }
 
+    // get orders for all users
     const getOrdersAdmin = async (uid) => {
         try{
 
@@ -70,7 +68,7 @@ const Orders = (props) => {
                   Authorization: ' Bearer ' + userInfo.token
             }
         })
-        console.log("responseorder: "+JSON.stringify(data.message));
+        console.log("responseorderrrrrrr: "+JSON.stringify(data.message));
         setOrderList(data.message)
 
     }catch(error){
@@ -78,53 +76,42 @@ const Orders = (props) => {
         }
     }
 
-    const getUsers = async () => {
-        console.log(userInfo)
-        try{
 
-            const { data } = await Axios.get(`${base_url}/order/getusers`, {
-                headers: {
-                      Authorization: ' Bearer ' + userInfo.token
-                }
-            })
-            console.log("responseuser: "+JSON.stringify(data.message));
-           /* var usersID = {}
-            var i = 0
-    
-            userList.map((user) => {
-
-                console.log("all user id: "+JSON.stringify(user))
-                usersID['_id'+i] = user._id
-                i += 1
-            })*/
-            setUserList(data.message)
-
-
-    
-        }catch(error){
-                console.log(error);
-            }
-
-    }
-
-    /****get all orders for administration back office */
-    const adminGetAllOrders = async () => {
+    /****get all users for administration back office */
+    const adminGetAllUsers = async () => {
        // getUsers()
         console.log("admin get orders")
         try{
 
-            const { data } = await Axios.get(`${base_url}/order/getorders`, {
+            const { data } = await Axios.get(`${base_url}/admin/get-users`, {
                 headers: {
                       Authorization: ' Bearer ' + userInfo.token
                 }
             })
-            console.log("response All orders: "+JSON.stringify(data.message));
+            console.log("response All users: "+JSON.stringify(data.message));
             setUserList(data.message)
 
         }catch(error){
             console.log(error + "error front");
         }
         
+    }
+
+    const deleteOrder =  async (orderId) => {
+        console.log("admin get orders")
+      /*  try{
+
+            const { data } = await Axios.get(`${base_url}/admin/deleteOrder/${orderId}`, {
+                headers: {
+                      Authorization: ' Bearer ' + userInfo.token
+                }
+            })
+            console.log("response All users: "+JSON.stringify(data.message));
+            setUserList(data.message)
+
+        }catch(error){
+            console.log(error + "error front");
+        }*/
     }
     
 
@@ -204,12 +191,12 @@ const Orders = (props) => {
                     }
                     {
                       userInfo.isAdmin && !isOrderOpened && userList.map(user => {
-                        if(!user.isAdmin){
+                        if(!user.isAdmin && user.hasAnOrder){
                             return (                               
 
                                 <div key={user._id} className="Order">
                                     <div className="OrderHeader">
-                                        UID: <a href="#">{user._id}</a>
+                                        CID: <a href="#">{user._id}</a>
                                     </div>
                                     <div className="OrderDescription">
                                     <div className="od1">
@@ -265,7 +252,7 @@ const Orders = (props) => {
                                                            setFirstName(" ")
                                                            setLastName(" ")
                                                             setIsOrderOpened(false) 
-                                                            adminGetAllOrders()                                                           
+                                                            adminGetAllUsers()                                                           
                                                         } }
                                                         >
                                             Retour
@@ -304,11 +291,25 @@ const Orders = (props) => {
                                                     </div>
                                                     
                                                 </div>
+                                                
                                             </div>
                                         ))}
                                     </div>
                                     <div className="OrderFooter">
                                         <p>Commande passée le <span>{formatDate(order.orderDate)}</span></p>
+                                        <MdpButton 
+                                        style={{marginLeft: "-675px"}}
+                                        outline
+                                        mdpS
+                                        mdpDelete
+                                        onClick={() => {
+                                                            deleteOrder(order._id)
+                                                            console.log(order._id)                                                           
+                                                        } } >
+                                        <i className="fas fa-trash" style={{marginRight: "3px"}}></i>&nbsp;
+                                        Supprimer
+                                        </MdpButton>
+                                      
                                         <p>Total de la commande <span>{getOrderTotal(order._id)}€</span></p>
                                     </div>
                                 </div>

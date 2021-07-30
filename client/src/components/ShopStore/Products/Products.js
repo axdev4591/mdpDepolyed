@@ -51,6 +51,7 @@ const Products = (props) => {
                             <ul>
                                 {categories &&
                                     categories.map((value) => ( 
+                                <ul className="ulCat">
                                     <li key={value._id}>
                                     <Link to={`/products/${value.slug}`} onClick={() => {
                                              
@@ -60,7 +61,8 @@ const Products = (props) => {
                                     } }>{value.name}
                                     </Link>
                                    
-                                    </li>))
+                                    </li>
+                                </ul>))
                                     
                                 }
                             </ul>

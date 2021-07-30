@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const User = require('../models/user');
 const Admin = require('../models/admin');
 
 exports.login = (req, res, next) => {
@@ -135,4 +135,29 @@ exports.signup = async (req, res) => {
     } catch (error) {
       res.send({ message: error.message });
     }
+}
+
+exports.getUsers = (req, res, next) => {
+
+    console.log("&&& get all the  users &&&&&&&&&&&&&&\n\n")
+
+    User.find()
+    .then(user => {
+        //res.locals.usersID = user
+        
+        console.log(user)
+        res.status(200).json({
+            message: user
+        })
+
+        //next()
+    })
+    .catch(error => {
+        console.log("no user found")
+        res.status(500).json({
+            error: error + "erroror"
+        })
+      
+    })
+
 }

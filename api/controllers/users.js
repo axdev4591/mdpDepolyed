@@ -285,6 +285,7 @@ exports.signup = (req, res, next) => {
 
 
 
+
 /**exports.loginOld = (req, res, next) => {
     console.dir(req.body);
     console.log(" is email in body? " +req.body.email)

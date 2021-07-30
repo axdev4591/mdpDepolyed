@@ -5,19 +5,30 @@
     border-left: 1px solid #eee;
     border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
+    margin-bottom: 5em;
 }
 
 .about {
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 70vh;
   padding: 0 20px;
-  font-family: "Open Sans", 'Open Sans',Verdana,sans-serif;
-    font-size: 16px;
-    font-weight: 300;
+  margin: 0 auto;
+
 }
 .im {
     border-radius: 50%;
     margin-right: 1em;
+  }
+
+  .BreadCrumb1 > small1{
+    font-family: "Open Sans", 'Open Sans',Verdana,sans-serif;
+    font-size: 15px;
+}
+
+
+  .a li {
+    list-style-type: circle;
+    margin-left: 4em;
   }

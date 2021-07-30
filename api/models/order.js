@@ -14,7 +14,9 @@ const orderSchema = mongoose.Schema({
     orderDate: { type: Date, default: Date.now() },
     paymentType: String,
     paymentStatus: String,
-    isOrderCompleted: { type: Boolean, default: false }
+    isOrderCompleted: { type: Boolean, default: false },
+    deliveryStatus: { type: Boolean, default: false },
+    deliveryDate: { type: Date, default: null }
 });
 
 module.exports = mongoose.model('Order', orderSchema);

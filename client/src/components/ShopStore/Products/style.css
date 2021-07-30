@@ -160,3 +160,11 @@ margin-top: 7px;
     ;
     color: white;
 }
+
+.ulCat li {
+    list-style-type: disc;
+  }
+  .ulCat {
+    margin-left: 2em;
+  }
+

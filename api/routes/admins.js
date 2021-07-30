@@ -6,6 +6,8 @@ router.post('/signup', adminCtrl.signup);
 
 router.post('/login', adminCtrl.login);
 
+router.get('/get-users', adminCtrl.getUsers);
+
 /*
 router.get('/', (req, res, next) => {
 

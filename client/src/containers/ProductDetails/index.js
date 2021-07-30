@@ -111,7 +111,7 @@ const acheterNow  = (product) => {
                         <div className="BreadCrumb">
                             <small>Auteur: Nene DOGBA | Date de parition: 12 mars 2020</small>
                             <small>{ product.stock > 0 ? "  "+ product.stock  + " exemplaire en stock" : "Rupture de stock"  } | Expédition sous 24 heures</small>
-                            
+          
                         </div>
                         <div className="ProductDescription">
                             <h3 style={{marginTop: "17px"}}>Description</h3>

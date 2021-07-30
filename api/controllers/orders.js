@@ -5,7 +5,7 @@ const UserAddress = require('../models/userAddress');
 const User =  require('../models/user')
 
 
-exports.createOrder = (req, res, next) => {
+exports.createOrder = async  (req, res, next) => {
     const order = new Order({
         _id: new mongoose.Types.ObjectId(),
         user: req.body.user,
@@ -14,6 +14,10 @@ exports.createOrder = (req, res, next) => {
         paymentType: req.body.paymentType,
         paymentStatus: req.body.paymentStatus
     });
+ 
+    const userId = req.body.id;
+    const user = await User.findById(userId);
+   
 
     order.save()
     .then(order => {
@@ -21,6 +25,11 @@ exports.createOrder = (req, res, next) => {
         CartItem.remove({"user": req.body.user})
         .exec()
         .then(doc => {
+            if (user) {
+                user.hasAnOrder = true;
+                user.save();
+                
+                } 
             res.status(201).json({
                 message: order
             });
@@ -39,7 +48,7 @@ exports.createOrder = (req, res, next) => {
             error: error
         });
     })
-}
+} 
 
 exports.getUserOrders = (req, res, next) => {
 
@@ -52,7 +61,7 @@ exports.getUserOrders = (req, res, next) => {
     .exec()
     .then(orders => {
 
-        console.log("get user order"+userId + "  "+orders)
+        console.log("get user order "+userId + "  "+orders)
         UserAddress.findOne({"user": userId})
         .exec()
         .then(userAddress => {
@@ -92,50 +101,6 @@ exports.getUserOrders = (req, res, next) => {
 
 }
 
-exports.getAllUser = (req, res, next) => {
-
-    console.log("&&&&&&&&&order for users &&&&&&&&&&&&&&\n\n")
-
-    User.find()
-    .then(user => {
-        res.status(200).json({
-            message: user
-        })
-        //console.log(user)
-    })
-    .catch(error => {
-        console.log("no user found")
-        res.status(500).json({
-            error: error
-        })
-      
-    })
-
-}
-exports.getUsersMiddleware = (req, res, next) => {
-
-    console.log("&&&&&&&&&order for users &&&&&&&&&&&&&&\n\n")
-
-    User.find()
-    .then(user => {
-        //res.locals.usersID = user
-        
-        console.log(user)
-        res.status(200).json({
-            message: user
-        })
-
-        //next()
-    })
-    .catch(error => {
-        console.log("no user found")
-        res.status(500).json({
-            error: error + "erroror"
-        })
-      
-    })
-
-}
 
 exports.getAllOrders = (req, res, next) => {
     console.log("&&&&&&&&&order for admin &&&&&&&&&&&&&&\n\n")
@@ -217,6 +182,51 @@ exports.deleteOrder = (req, res, next) => {
 
 }
 
-exports.updateOrder = (req, res, next) => {
+exports.updateOrder = async (req, res, next) => {
 
+    const orderId = req.params.id;
+    const order = await Order.findById(orderId);
+    if (order) {
+        order.user = req.body.user || order.user;
+        order.order = req.body.order || order.order;
+        order.address = req.body.address || order.address;
+        order.paymentType = req.body.paymentType || order.paymentType;
+        order.paymentStatus = req.body.paymentStatus || order.paymentStatus;
+        order.deliveryStatus = req.body.deliveryStatus || order.deliveryStatus;
+        order.deliveryDate = req.body.deliveryDate || order.deliveryDate;
+
+      const updatedOrder = await order.save();
+      res.status(201).json({
+        message: updatedOrder
+    })
+    } else {
+      res.status(404).send({ message: 'User Not Found' });
+    }
+  
+
+    order.save()
+    .then(order => {
+
+        CartItem.remove({"user": req.body.user})
+        .exec()
+        .then(doc => {
+           
+            res.status(201).json({
+                message: order
+            });
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: error
+            });
+        })
+
+
+        
+    })
+    .catch(error => {
+        res.status(500).json({
+            error: error
+        });
+    })
 }

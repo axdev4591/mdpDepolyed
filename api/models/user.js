@@ -20,7 +20,8 @@ const userSchema = mongoose.Schema({
      profilePic: { type: String },
      createdAt: Date,
      updatedAt: Date,
-     isAdmin: { type: Boolean, required: true, default: false }
+     isAdmin: { type: Boolean, required: true, default: false },
+     hasAnOrder: { type: Boolean, required: true, default: false }
 });
 
 
