@@ -9,6 +9,7 @@ import {MdpButton} from '../../components/UI/MdpStyledComponents'
 import './style.css';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import 'ag-grid-enterprise';
 
 const Users = (props) => {
 
@@ -33,14 +34,30 @@ const Users = (props) => {
     const { loading, userInfo, error } = userSignin
     const [userList, setUserList] = useState([])
 
-   const rowData = [
-       {uid: "1", nom: "Celica", prenom: "tg", email: "axe@tt.fr", tel: "0755226301"},
-       {uid: "2", nom: "Mondeo", prenom: "uu", email: "axe@tt.fr", tel: "0755226301"},
-       {uid: "3", nom: "Boxter", prenom: "kl", email: "axe@tt.fr", tel: "0755226301"},
-       {uid: "4", nom: "Celica", prenom: "jj", email: "axe@tt.fr", tel: "0755226301"},
-       {uid: "5", nom: "Mondeo", prenom: "gt", email: "axe@tt.fr", tel: "0755226301"},
-       {uid: "6", nom: "Boxter", prenom: "af", email: "axe@tt.fr", tel: "0755226301"}
+   const columns = [
+       {headerName:"Nom" , field:"lastName", checkboxSelection: true},
+       {headerName:"Prenom" , field:"firstName", tooltipField: "Nom"}, 
+       {headerName:"Email" , field:"email", tooltipField: "Nom"},
+       {headerName:"IsAdmin" , field:"isAdmin", tooltipField: "Nom"}, 
+       {headerName:"UID" , field:"_id", tooltipField: "Nom"}, 
+       {headerName:"Date d'inscription" , field:"createdAt"}
    ];
+
+   const defaultColDef = { 
+       sortable: true, 
+       editable: true, 
+       filter: true,
+       resizable: true,
+       minWidth: 100,
+       flex: 1,
+       floatingFilter: true,
+       icons: {
+        sortAscending: '<i class="fa fa-sort-alpha-up"/>',
+        sortDescending: '<i class="fa fa-sort-alpha-down"/>',
+      },
+      enableValue: true,}
+
+
   
  
    /****get all users for administration back office */
@@ -65,19 +82,25 @@ const Users = (props) => {
 
    return (
     <div className="Content">
-    <div className="Card">
-       <div className="ag-theme-alpine" style={{height: 600, width: 1250}}>
-           <AgGridReact
-               rowData={userList} >
-                <AgGridColumn field="firstName"></AgGridColumn>
-               <AgGridColumn field="lastName"></AgGridColumn>
-               <AgGridColumn field="email"></AgGridColumn>
-               <AgGridColumn field="firstName"></AgGridColumn>
-               <AgGridColumn field="isAdmin"></AgGridColumn>
-               <AgGridColumn field="hasAnOrder"></AgGridColumn>
-               <AgGridColumn field="_id"></AgGridColumn>
-               <AgGridColumn field="createdAt"></AgGridColumn>
-           </AgGridReact>
+    <div>
+       <div className="ag-theme-alpine" style={{height: 600, width: 1291}}>
+           <AgGridReact 
+                rowData={userList} 
+                columnDefs={columns} 
+                defaultColDef={defaultColDef} 
+                sideBar={{ toolPanels: ['columns'] }}
+                rowGroupPanelShow={'always'}
+                pivotPanelShow={'always'}
+                debug={true}
+                animateRows={true}
+                rowSelection={'multiple'}
+                enableBrowserTooltips={true}
+                tooltipShowDelay={{tooltipShowDelay: 2}}
+                pagination={true}
+                suppressRowClickSelection={true}
+                groupSelectsChildren={true}
+                paginationAutoPageSize={true}
+                />
        </div>
     </div>
     </div>

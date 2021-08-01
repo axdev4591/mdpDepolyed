@@ -1,21 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import PrivateRoute from '../PrivateRoute';
 import './style.css';
 import Login from './Login';
 import Signup from './Signup';
-import ForgetPassword from './ForgetPassword';
-import ControlPanel from './ControlPanel';
-import ProductDetails from './ProductDetails';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import Cookie from 'js-cookie';
-import Home from './Home';
-import Cart from './Cart';
-import PlaceOrder from './PlaceOrder';
-import ThankYou from './ThankYou';
-import Orders from './Orders';
 import ShopeStore from '../components/ShopStore/ShopStore'
 
 //Product reducer for admin
@@ -77,30 +68,10 @@ function App(props) {
       <Router>
         <div className="App">
 
-            <Switch>
-               
-              
+            <Switch>  
               <Route path="/login" component={Login} />  
               <Route path="/signup" component={Signup} />
-               <PrivateRoute path="/cart" component={Cart} />
-               <PrivateRoute path="/place-order" component={PlaceOrder} />
-               <PrivateRoute path="/thank-you" component={ThankYou} />
-              <PrivateRoute path="/orders" component={Orders} />
-
-
-              <Route path="/"  component={ShopeStore} />
-             
-                  {/**
-
-
-              <Route path="/forget-password" component={ForgetPassword} />
-              <Route path="/cpanel" component={ControlPanel} />
-              <PrivateRoute path="/place-order" component={PlaceOrder} />
-              <PrivateRoute path="/thank-you" component={ThankYou} />
-              <PrivateRoute path="/orders" component={Orders} />*/}
-               
-                 
-                         
+              <Route path="/"  component={ShopeStore} />                  
             </Switch>
 
         </div>

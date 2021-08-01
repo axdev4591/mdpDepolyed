@@ -27,7 +27,6 @@ const ThankYou  = (props) => {
 
         return (
             <div>
-                <Header />
                 <div className="Content">
                     <div className="ThankyouPage">
                        <h1>Merci pour votre commande</h1>

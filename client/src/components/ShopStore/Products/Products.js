@@ -86,7 +86,7 @@ const Products = (props) => {
                     <div className="MainContent">
 
                     <div className="ProductArea">
-                        {
+                        { products &&
                             products.map(product => <Product
                                 key={product._id}
                                 id={product._id}

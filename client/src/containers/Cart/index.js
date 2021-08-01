@@ -90,7 +90,6 @@ const Cart = (props) => {
 
     return (
         <React.Fragment>
-            <Header />
             <div className="Content">
                 <div className="CartWrapper">
                     <div className="CartDetails">

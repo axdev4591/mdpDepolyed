@@ -212,7 +212,6 @@ const PlaceOrder = (props) => {
 
         return (
             <React.Fragment>
-                <Header />
                 <div className="Content">
                     <div className="PlaceOrderWrapper">
 

@@ -133,7 +133,6 @@ const Orders = (props) => {
 
     return (
         <React.Fragment>
-            <Header />
             <div className="Content">
                 <div className="Card">
                    { userInfo.isAdmin ? <p className="CardText">Liste des commandes</p> : <p className="CardText">Mes Commandes</p>} 
