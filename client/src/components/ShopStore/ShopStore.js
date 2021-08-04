@@ -15,6 +15,7 @@ import Cart from '../../containers/Cart';
 import PlaceOrder from '../../containers/PlaceOrder';
 import ThankYou from '../../containers/ThankYou';
 import Orders from '../../containers/Orders';
+import OrderManagement from '../../containers/Orders/OrderManagement';
 
 
 const ShopStore = () => {
@@ -35,6 +36,7 @@ const ShopStore = () => {
                 <PrivateRoute path="/place-order" component={PlaceOrder} />
                 <PrivateRoute path="/thank-you" component={ThankYou} />
                 <PrivateRoute path="/orders" component={Orders} />
+                <PrivateRoute path="/OrderManagement" component={OrderManagement} />
 
                           
                   {/**

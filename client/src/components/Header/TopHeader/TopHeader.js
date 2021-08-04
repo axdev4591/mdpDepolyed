@@ -27,7 +27,7 @@ const TopHeader = (props) => {
 
         if(userInfo.isAdmin==true){
             guestAccount = <ul className="Dropdown Account">
-            <li><Link to="/orders"><i className="far fa-clipboard"></i>&nbsp;&nbsp;<span>Commandes</span></Link></li>
+            <li><Link to="/OrderManagement"><i className="far fa-clipboard"></i>&nbsp;&nbsp;<span>Commandes</span></Link></li>
             <li><Link to="/manageusers"><i className="fas fa-users"></i>&nbsp;&nbsp;<span>Utilisateurs</span></Link></li>
             <li><Link to="/manageproducts"><i className="fas fa-book"></i>&nbsp;&nbsp;<span>Produits</span></Link></li>
             <li><Link to="" onClick={() => handleLogout()}><i className="fas fa-sign-out-alt"></i>&nbsp;&nbsp;<span>Se déconnecter</span></Link></li>
