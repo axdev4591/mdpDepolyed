@@ -68,6 +68,8 @@ exports.getUserOrders = (req, res, next) => {
 
             const orderWithAddress = orders.map(order => {
                 const address = userAddress.address.find(userAdd => order.address.equals(userAdd._id));
+
+                
                 return {
                     _id: order._id,
                     order: order.order,
@@ -75,7 +77,7 @@ exports.getUserOrders = (req, res, next) => {
                     orderDate: order.orderDate,
                     paymentType: order.paymentType,
                     paymentStatus: order.paymentStatus,
-                    isOrderComleted: order.isOrderComleted
+                    isOrderCompleted: order.isOrderCompleted
                 }
             });
 

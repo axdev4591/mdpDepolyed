@@ -12,6 +12,7 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
 import {AccessAlarm, ThreeDRotation, AutorenewIcon } from '@material-ui/icons';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import OrderManagement2 from './OrderManagement2'
 
 const OrderManagement = (props) => {
 
@@ -21,27 +22,31 @@ const OrderManagement = (props) => {
     const [ordersList, setOrdersList] = useState([])
     const [status, setStatus] = useState(false)
     const [deleteDb, setDeleteDb] = useState(false)
-    const [isOpened, setIsOpened] = useState(false)
+    const [isOpened, setIsOpened] = useState(true)
     const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
+   const [lastName, setLastName] = useState("")
+   const [myOrders, setMyOrders] = useState([])
+   const [orderUserID, setOrderUserID] = useState("")
 
-    const colourMappings = {
-      Homme: '#00008B',
-      Femme: 'Forest Green'
-    };
+
   
     const columns = [
         {headerName:"Actions" , field:"", editable: false,
         cellRendererFramework: (params) => ( <MdpButton outline mdpXL onClick={() => {
             if(!params.data.isAdmin && params.data.hasAnOrder){
+              //setOrderUserID(params.data._id)
                 getOrdersAdmin(params.data._id)
                 setFirstName(params.data.firstName)
-                setLastName(params.data.lastName)}      
+                setLastName(params.data.lastName)
+                setIsOpened(false)
+              console.log("orders ftater consulter "+JSON.stringify(myOrders))
+              console.log("isopened after cisuloter 3: "+JSON.stringify(isOpened));
+              }      
         } }
         >
         <span style={{flexDirection:"column", textAlign: "center"}}>Consulter <VisibilityIcon fontSize="medium" /></span>
         </MdpButton>)},
-        {headerName:"Commande" , field:"hasAnOrder", editable: false, 
+        {headerName:"Commande" , field:"hasAnOrder", editable: true, 
         cellRenderer: 'agAnimateShowChangeCellRenderer'},
         {headerName:"Nom" , field:"lastName", editable: false, 
          cellRenderer: 'agAnimateShowChangeCellRenderer'},
@@ -52,11 +57,35 @@ const OrderManagement = (props) => {
        
     ];
 
+
+ 
+    const columns1 = [
+      {headerName:"N° de la commande" , field:"_id", editable: false, cellRenderer: 'agAnimateShowChangeCellRenderer'},
+      {headerName:"Commande passée le" , field:"orderDate",cellRenderer: 'agAnimateShowChangeCellRenderer'},
+      {headerName:"Produit" , field:"product", 
+      cellRenderer: 'agAnimateShowChangeCellRenderer'},
+      {headerName:"Montant total" , field:"total", 
+      cellRenderer: 'agAnimateShowChangeCellRenderer'},
+  
+       
+       {headerName:"Status de Paiement", field:"paymentStatut", cellRenderer: 'agAnimateShowChangeCellRenderer'},
+  
+      {headerName:"Adresse de livraison" , field:"deliveryAdress",  cellRenderer: 'agAnimateShowChangeCellRenderer'},
+      {headerName:"Type de Paiement", field:"paymentType", cellRenderer: 'agAnimateShowChangeCellRenderer'}, 
+      
+      {headerName:"Status de Paiement", field:"paymentStatut",  cellRenderer: 'agAnimateShowChangeCellRenderer'},
+      {headerName:"Statut de la livraison" , field:"DeliveryStatus",  cellRenderer: 'agAnimateShowChangeCellRenderer'}
+     
+  ];
+  //columns for one user orders:
+
+
    /* const frameworkComponents ={
         genderCellRenderer: GenderRenderer
       }*/
     const defaultColDef = { 
-        sortable: true, 
+        sortable: true,
+        editable: true, 
         filter: true,
         resizable: true,
         minWidth: 100,
@@ -94,7 +123,8 @@ const OrderManagement = (props) => {
     const onGridReady = (params) => {
         setGridApi(params.api);
         setGridColumnApi(params.columnApi);
-        console.log("Grid is ready load orders ");
+        console.log("Grid is ready load orders "+params.api);
+        
       };
 
   
@@ -209,28 +239,29 @@ const OrderManagement = (props) => {
                 })
                 console.log("responseorderrrrrrr: "+JSON.stringify(data.message));
                 setOrdersList(data.message)
-                setIsOpened(true)
+                console.log("responseorderrrrrrr 2: "+JSON.stringify(isOpened));
+
+            
             }catch(error){
                 console.log(error);
             }
-        
-
-    
     }
+
+
     const formatDate = (date) => {
         let d = new Date(date);
         return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
     }
 
     const getOrderTotal = (id) => {
-        const singleOrder = ordersList.find(order => order._id === id);
-        let orderTotal = 0;
-        singleOrder.order.forEach(order => {
-            orderTotal = orderTotal + (order.price * order.quantity)
-        });
+      const singleOrder = ordersList.find(order => order._id === id);
+      let orderTotal = 0;
+      singleOrder.order.forEach(order => {
+          orderTotal = orderTotal + (order.price * order.quantity)
+      });
 
-        return orderTotal;
-    }
+      return orderTotal;
+  }
     const onUpdateSomeValues = (rowIndex) => {
       var rowCount = gridApi.getDisplayedRowCount();
      
@@ -252,7 +283,7 @@ const OrderManagement = (props) => {
     };
 
   const sendData = () => {
-    console.log("status ="+status)
+    console.log("isopen ="+isOpened)
     if(status){
 
       console.log('Data updated'+gridApi.data);
@@ -260,11 +291,32 @@ const OrderManagement = (props) => {
   }
   }
 
+ /* const setOrderData = () =>{
+
+    var listOfOrder = []
+    ordersList.map(item => {
+
+      listOfOrder["_id"] = item._id
+      listOfOrder["product"] = item.order
+      listOfOrder["orderDate"] = item.orderDate
+      listOfOrder["total"] = getOrderTotal(item.order._id)
+      listOfOrder["deliveryAdress"] = item.address
+      listOfOrder["paymentType"] = item.paymentType
+      listOfOrder["paymentStatus"] = item.paymentStatus
+      listOfOrder["deliveryStatus"] = ""
+    })
+
+    setMyOrders(listOfOrder)
+    console.log("set all order ..... "+ JSON.stringify(ordersList))
+    console.log("set user order ..... "+ JSON.stringify(myOrders))
+  }*/
+
    return (
     <div className="Content">
     <div className="Card">
-    { !isOpened ? <p className="CardText">Consultation des commandes</p> : <p className="CardText">Liste commandes</p>} 
-        { !isOpened ? 
+    { isOpened ? <p className="CardText">Consultation des commandes</p> : <p className="CardText">Liste commandes</p>}
+
+    { isOpened ? 
     
        <div className="ag-theme-alpine" style={{height: 560, width: 1251}}>
      
@@ -275,14 +327,7 @@ const OrderManagement = (props) => {
         >
          Supprimer
         </MdpButton>
-        <MdpButton style={{float: 'right'}}  outline mdpXL onClick={() => {
 
-            setStatus(true)
-            sendData()
-        } }
-        >
-        Enregistrer
-        </MdpButton>
            <AgGridReact 
                 rowData={userList} 
                 columnDefs={columns} 
@@ -303,7 +348,8 @@ const OrderManagement = (props) => {
                 //frameworkComponents={frameworkComponents}                    
                 onCellValueChanged={onCellValueChanged}
                 />          
-       </div>:   ordersList.map(order => {
+       </div>
+       : ordersList.map(order => {
         return (
             <div key={order._id} className="Order">
                                     <div className="OrderHeader">
@@ -314,7 +360,7 @@ const OrderManagement = (props) => {
                                     <MdpButton style={{float: "right"}} outline mdpXL onClick={() => {
                                                            setFirstName(" ")
                                                            setLastName(" ")
-                                                           setIsOpened(false) 
+                                                           setIsOpened(true) 
                                                            adminGetAllUsers()                                                           
                                                         } }
                                                         >
@@ -338,8 +384,10 @@ const OrderManagement = (props) => {
                                             <p className="odtitle" >Statut de la livraison</p>
                                             <a className="odp" style={{color: "white"}}>{ order.isOrderCompleted ? "livré le 12/01/2021" : order.paymentStatus }</a>
                                         </div>
-                                    
+                                        
                                     </div>
+
+
                                     <div>
                                         {order.order.map(item => (
                                             <div key={item._id} style={{display: 'flex', alignItems: 'center', margin: '5px 0', borderBottom: '1px solid #cecece'}}>
@@ -377,8 +425,7 @@ const OrderManagement = (props) => {
                                     </div>
                                 </div>
         )
-    })
-}
+    })}
     </div>
     </div>
    );
@@ -458,5 +505,82 @@ function getDatePicker() {
   }
   
 };
+{/** ordersList.map(order => {
+        return (
+            <div key={order._id} className="Order">
+                                    <div className="OrderHeader">
+                                    N° de la commande:  <a style={{marginRight: "10px"}} href="#">{order._id}</a>
 
+                                    Utilisateur: <a  className="odp" style={{color: "white"}}>{firstName} {lastName}</a>
+
+                                    <MdpButton style={{float: "right"}} outline mdpXL onClick={() => {
+                                                           setFirstName(" ")
+                                                           setLastName(" ")
+                                                           setIsOpened(false) 
+                                                           adminGetAllUsers()                                                           
+                                                        } }
+                                                        >
+                                            Retour
+                                    </MdpButton>
+                                    </div>
+                                    <div className="OrderDescription">
+                                        <div className="od1">
+                                            <p className="odtitle">Adresse de livraison</p>
+                                            <p>{`${order.address.address} ${order.address.cityDistrictTown} ${order.address.state} - ${order.address.pinCode}`}</p>
+                                        </div>
+                                        <div className="od2">
+                                            <p className="odtitle">Type de paiement</p>
+                                            <a className="odp" style={{color: "white"}}>{order.paymentType}</a>
+                                        </div>
+                                        <div className="od3">
+                                            <p className="odtitle" >Statut du paiement</p>
+                                            <a className="odp" style={{color: "white"}}>{order.paymentStatus}</a>
+                                        </div>
+                                        <div className="od3">
+                                            <p className="odtitle" >Statut de la livraison</p>
+                                            <a className="odp" style={{color: "white"}}>{ order.isOrderCompleted ? "livré le 12/01/2021" : order.paymentStatus }</a>
+                                        </div>
+                                        
+                                    </div>
+
+
+                                    <div>
+                                        {order.order.map(item => (
+                                            <div key={item._id} style={{display: 'flex', alignItems: 'center', margin: '5px 0', borderBottom: '1px solid #cecece'}}>
+                                                <div style={{width: '80px', height: '80px', overflow: 'hidden', position: 'relative'}} className="ImageContainer">
+                                                    <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={item.product.imageUrl}/>
+                                                </div>
+                                                <div>
+                                                    <p className="odtitle">{item.product.name}</p>
+                                                    <div style={{fontSize: '14px', color: '#555', fontWeight: 'bold'}}>
+                                                    <p>Quantité: {item.quantity}</p>
+                                                    <p>{item.price * item.quantity}€</p>
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="OrderFooter">
+                                        <p>Commande passée le <span>{formatDate(order.orderDate)}</span></p>
+                                        <MdpButton 
+                                        style={{marginLeft: "-675px"}}
+                                        outline
+                                        mdpS
+                                        mdpDelete
+                                        onClick={() => {
+                                                            deleteOrder(order._id)
+                                                            console.log(order._id)                                                           
+                                                        } } >
+                                        <i className="fas fa-trash" style={{marginRight: "3px"}}></i>&nbsp;
+                                        Supprimer
+                                        </MdpButton>
+                                      
+                                        <p>Total de la commande <span>{getOrderTotal(order._id)}€</span></p>
+                                    </div>
+                                </div>
+        )
+    }) */}
 export default OrderManagement;
+
