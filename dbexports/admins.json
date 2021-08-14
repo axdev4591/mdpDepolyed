@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "5fedd4a7805e54040c3aefe0"
+  },
+  "isAdmin": true,
+  "firstName": "admin",
+  "lastName": "admin",
+  "email": "axdev2020@gmail.com",
+  "password": "$2b$10$t/EOZA6XBZnY.J6RBn9DfOD6oDM69bkwLSI7HoHLdu0uq0fWfd2wC",
+  "createdAt": {
+    "$date": "2020-12-31T13:39:51.973Z"
+  },
+  "__v": 0
+}]

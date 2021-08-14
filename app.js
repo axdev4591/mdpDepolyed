@@ -7,15 +7,23 @@ const bodyParser = require('body-parser');
 const config =  require('./config')
 const util = require('./util')
 
+
   mongoose
   .connect(config.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-  }).then(() => console.log('Successfully connected to MongoDB  !'))
-  .catch((error) => console.log("Connection to MongoDb failed"+ error.reason));
+  }).then(() => console.log('Successfully connected to Atlas MongoDB  !'))
+  .catch((error) => console.log("Connection to Atlas MongoDb failed"+ error.reason));
 
-
+ /* mongoose
+  .connect(config.DIGITAL_MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    tlsCAFile: './ca-certificate.crt'
+  }).then(() => console.log('Successfully connected to DigitalOcean MongoDB  !'))
+  .catch((error) => console.log("Connection to DigitalOcean MongoDb failed"+ error.reason));
+*/
 const adminRoutes = require('./api/routes/admins');
 const categoryRoutes = require('./api/routes/categories');
 const userRoutes = require('./api/routes/users');

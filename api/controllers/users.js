@@ -7,24 +7,36 @@ const util =  require('../../util');
 
 
 
-
 exports.updateUser = async (req, res) => {
     const userId = req.params.id;
     const user = await User.findById(userId);
+
+    console.log("update user data "+JSON.stringify(req.body))
     if (user) {
       user.firstName = req.body.name || user.firstName;
       user.lastName = req.body.name || user.lastName;
       user.email = req.body.email || user.email;
       user.password = req.body.password || user.password;
+      user.status = req.body.status || user.status;
+      user.createdAt = req.body.createdAt || user.createdAt;
+      user.sex = req.body.sex || user.sex;
+      user.tel = req.body.tel || user.tel;
+      
       const updatedUser = await user.save();
-      res.send({
+    /*  res.send({
         _id: updatedUser.id,
         firstName: updatedUser.firstName,
         lastName: updatedUser.lastName,
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
         token: getToken(updatedUser),
-      });
+      });*/
+
+      res.status(200).json({
+        message: updatedUser
+    })
+    console.log("data successfully updated "+JSON.stringify(updatedUser))
+
     } else {
       res.status(404).send({ message: 'User Not Found' });
     }

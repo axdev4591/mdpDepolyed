@@ -15,7 +15,7 @@ import {AccessAlarm, ThreeDRotation, AutorenewIcon } from '@material-ui/icons';
 import CachedIcon from '@material-ui/icons/Cached';
 import FiberNewIcon from '@material-ui/icons/FiberNew'
 import PregnantWomanIcon from '@material-ui/icons/PregnantWoman';
-//import SettingsAccessibilityIcon from '@material-ui/icons/SettingsAccessibility';
+import SaveIcon from '@material-ui/icons/Save';
 
 const Users = (props) => {
 
@@ -29,11 +29,19 @@ const Users = (props) => {
       Homme: '#00008B',
       Femme: 'Forest Green'
     };
-  
+    
     const columns = [
         {headerName:"Statut" , field:"status", editable: false, 
         cellRendererFramework: (params) => (params.value=="UPDATED"?<CachedIcon fontSize="medium" />
         :(params.value=="EXISTING"?"":<FiberNewIcon fontSize="medium" />)) },
+        {headerName:"" , field:"", editable: false, 
+        cellRendererFramework: (params) => (<MdpButton outline mdpXL onClick={() => {
+                                                              console.log("send data to server "+JSON.stringify(params.data))
+                                                              updateUsers(params.data)
+                                                            } }
+                                                          > <SaveIcon fontSize="medium" />
+                                                          Enregistrer
+                                                          </MdpButton>) },
 
         {headerName:"" , field:"", checkboxSelection: true, headerCheckboxSelection:true, headerCheckboxSelectionFilteredOnly:true},
         {headerName:"Nom" , field:"lastName",
@@ -234,47 +242,46 @@ const Users = (props) => {
 
     const onCellValueChanged = (event) => {
     
-      console.log('Data after change is', event);
       onUpdateSomeValues(event.rowIndex)
 
-    
     };
 
-  const sendData = () => {
-    console.log("status ="+status)
-    if(status){
+  const updateUsers = async (users) => {
 
-      console.log('Data updated'+gridApi.data);
-    //update user info
+    try {
+    const { data } = await Axios.post(`${base_url}/admin/update-user/${users._id}`, users, {
+      headers: {
+        Authorization: 'Bearer ' + userInfo.token
+      },
+      })
+     setUserList(data.message)
+    }catch(error){
+      console.log(JSON.stringify(error) + "error front");
   }
   }
+
 
    return (
     <div className="Content">
     <div className="Card">
     <p className="CardText">Liste des Utilisateurs</p>
-       <div className="ag-theme-alpine" style={{height: 560, width: 1251}}>
+       <div className="ag-theme-alpine" style={{height: 560, width: 1251}}> 
+       
        <MdpButton outline mdpXL onClick={() => {
-            addItems(0)
-        } }
-        >
-         Ajouter
-        </MdpButton>
-        <MdpButton outline mdpXL onClick={() => {
 
             onRemoveSelected()
         } }
         >
          Supprimer
         </MdpButton>
-        <MdpButton style={{float: 'right'}}  outline mdpXL onClick={() => {
-
-            setStatus(true)
-            sendData()
+       <MdpButton style={{float:"right"}} outline mdpXL onClick={() => {
+            addItems(0)
         } }
         >
-        Enregistrer
+         Ajouter
         </MdpButton>
+       
+        
            <AgGridReact 
                 rowData={userList} 
                 columnDefs={columns} 

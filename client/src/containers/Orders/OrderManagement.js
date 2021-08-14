@@ -26,7 +26,7 @@ const OrderManagement = (props) => {
     const [firstName, setFirstName] = useState("")
    const [lastName, setLastName] = useState("")
    const [myOrders, setMyOrders] = useState([])
-   const [orderUserID, setOrderUserID] = useState("")
+   const [deliveryStatus, setDeliveryStatus] = useState("livré le 12/01/2021")
 
 
   
@@ -291,25 +291,9 @@ const OrderManagement = (props) => {
   }
   }
 
- /* const setOrderData = () =>{
-
-    var listOfOrder = []
-    ordersList.map(item => {
-
-      listOfOrder["_id"] = item._id
-      listOfOrder["product"] = item.order
-      listOfOrder["orderDate"] = item.orderDate
-      listOfOrder["total"] = getOrderTotal(item.order._id)
-      listOfOrder["deliveryAdress"] = item.address
-      listOfOrder["paymentType"] = item.paymentType
-      listOfOrder["paymentStatus"] = item.paymentStatus
-      listOfOrder["deliveryStatus"] = ""
-    })
-
-    setMyOrders(listOfOrder)
-    console.log("set all order ..... "+ JSON.stringify(ordersList))
-    console.log("set user order ..... "+ JSON.stringify(myOrders))
-  }*/
+ const submitHandler = () => {
+   console.log("submit data")
+ }
 
    return (
     <div className="Content">
@@ -320,13 +304,6 @@ const OrderManagement = (props) => {
     
        <div className="ag-theme-alpine" style={{height: 560, width: 1251}}>
      
-        <MdpButton outline mdpXL onClick={() => {
-
-            onRemoveSelected()
-        } }
-        >
-         Supprimer
-        </MdpButton>
 
            <AgGridReact 
                 rowData={userList} 
@@ -351,39 +328,63 @@ const OrderManagement = (props) => {
        </div>
        : ordersList.map(order => {
         return (
-            <div key={order._id} className="Order">
-                                    <div className="OrderHeader">
-                                    N° de la commande:  <a style={{marginRight: "10px"}} href="#">{order._id}</a>
+         
+          <div key={order._id} className="Order">
+                        <div className="OrderHeader">
+                        N° de la commande:  <a style={{marginRight: "10px"}} >{order._id}</a>
 
-                                    Utilisateur: <a  className="odp" style={{color: "white"}}>{firstName} {lastName}</a>
+                        Utilisateur: <a  className="odp" style={{color: "white"}}>{firstName} {lastName}</a>
 
-                                    <MdpButton style={{float: "right"}} outline mdpXL onClick={() => {
-                                                           setFirstName(" ")
-                                                           setLastName(" ")
-                                                           setIsOpened(true) 
-                                                           adminGetAllUsers()                                                           
-                                                        } }
-                                                        >
-                                            Retour
-                                    </MdpButton>
+                        <MdpButton style={{float: "right"}} outline mdpXL onClick={() => {
+                                                setFirstName(" ")
+                                                setLastName(" ")
+                                                setIsOpened(true) 
+                                                adminGetAllUsers()                                                           
+                                            } }
+                                            >
+                                Retour
+                        </MdpButton>
                                     </div>
-                                    <div className="OrderDescription">
+                                    <div className="OrderDescription" >
+                                      
                                         <div className="od1">
                                             <p className="odtitle">Adresse de livraison</p>
-                                            <p>{`${order.address.address} ${order.address.cityDistrictTown} ${order.address.state} - ${order.address.pinCode}`}</p>
-                                        </div>
+                                            <input style={{backgroundColor:"#00008B", color: "white"}}
+                                                    value={`${order.address.address} ${order.address.cityDistrictTown} ${order.address.state} - ${order.address.pinCode}`}
+                                        
+                                                    readOnly
+                                                   type="text" />
+                                       </div>
                                         <div className="od2">
                                             <p className="odtitle">Type de paiement</p>
-                                            <a className="odp" style={{color: "white"}}>{order.paymentType}</a>
+                                            <input style={{backgroundColor:"#00008B", color: "white"}}
+                                                    value={order.paymentType}
+                                                    readOnly
+                                                   type="text" />
+                                            
                                         </div>
                                         <div className="od3">
                                             <p className="odtitle" >Statut du paiement</p>
-                                            <a className="odp" style={{color: "white"}}>{order.paymentStatus}</a>
+                                            <input style={{backgroundColor:"#00008B", color: "white"}}
+                                                    value={order.paymentStatus}
+                                                    readOnly
+                                                   type="text" />
                                         </div>
                                         <div className="od3">
                                             <p className="odtitle" >Statut de la livraison</p>
-                                            <a className="odp" style={{color: "white"}}>{ order.isOrderCompleted ? "livré le 12/01/2021" : order.paymentStatus }</a>
-                                        </div>
+                                            <input style={{backgroundColor:"#00008B", color: "white"}}
+                                                    value={deliveryStatus}
+                                                    onChange={(e) => setDeliveryStatus(e.target.value)}
+                                                   type="text" required />
+                                              
+                                          </div>
+                                          <MdpButton type="submit" outline mdpXL style={{float: "left" }}
+                                          onClick={(e) => {
+                                            e.preventDefault()
+                                            submitHandler()
+                                          }}>
+                                        Valider
+                                      </MdpButton>
                                         
                                     </div>
 
@@ -424,6 +425,9 @@ const OrderManagement = (props) => {
                                         <p>Total de la commande <span>{getOrderTotal(order._id)}€</span></p>
                                     </div>
                                 </div>
+     
+
+            
         )
     })}
     </div>

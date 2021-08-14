@@ -7,6 +7,7 @@ import Header from '../Header/Header'
 import FooterContainer from '../Footer/FooterContainer' 
 import ProductDetails from '../../containers/ProductDetails/index'
 import ProductsScreen from '../../containers/Products/ProductsScreen'
+import ProductManagement from '../../containers/Products/ProductManagement' 
 import Users from '../../containers/usersList/Users'
 import Home from '../../containers/Home'
 import Contact from './Contact/Contact'
@@ -27,7 +28,7 @@ const ShopStore = () => {
                 <Route path="/" exact component={Products} />
                 <Route path="/products" exact component={Products} />
                 <Route path="/products/:slug" exact component={Products} />
-                <Route path="/manageproducts" exact component={ProductsScreen} />
+                <Route path="/manageproducts" exact component={ProductManagement} />
                 <Route path="/manageusers" exact component={Users} />               
                 <Route path="/products/:category/:slug" component={ProductDetails} />
                 <Route path="/contact" exact component={Contact} />

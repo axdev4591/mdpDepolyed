@@ -1,0 +1,173 @@
+[{
+  "_id": {
+    "$oid": "5fede5a2ce9f282f7c5f01d3"
+  },
+  "user": {
+    "$oid": "5fedbd10dcfef935c4dcd1db"
+  },
+  "address": [
+    {
+      "_id": {
+        "$oid": "5fede5a2ce9f282f7c5f01d4"
+      },
+      "fullName": "Axel Love MOUELE",
+      "mobileNumber": 758000973,
+      "pinCode": 93450,
+      "locality": "L ILE ST DENIS",
+      "address": "01 rue du bocage\nApt 207",
+      "cityDistrictTown": "Taverny",
+      "state": "France",
+      "landmark": "",
+      "alternatePhoneNumber": null
+    },
+    {
+      "_id": {
+        "$oid": "607d5adbc44820040ad3d8a4"
+      },
+      "fullName": "Axel LOve",
+      "mobileNumber": 78889998877,
+      "pinCode": 92200,
+      "locality": "Val d'oise",
+      "address": "8 rue François couperin",
+      "cityDistrictTown": "Sarcelles",
+      "state": "France",
+      "landmark": "",
+      "alternatePhoneNumber": null
+    }
+  ],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1da033420e7365893b787"
+  },
+  "user": {
+    "$oid": "5ff1d9943420e7365893b77f"
+  },
+  "address": [
+    {
+      "_id": {
+        "$oid": "5ff1da033420e7365893b788"
+      },
+      "fullName": "Jeny PAKA",
+      "mobileNumber": 758000973,
+      "pinCode": 95150,
+      "locality": "Val d'oise",
+      "address": "257 rue de Paris",
+      "cityDistrictTown": "Taverny",
+      "state": "France",
+      "landmark": "",
+      "alternatePhoneNumber": null
+    }
+  ],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60741d283957300017843488"
+  },
+  "user": {
+    "$oid": "6002fc4597071f2df485bcc2"
+  },
+  "address": [
+    {
+      "_id": {
+        "$oid": "60741d283957300017843489"
+      },
+      "fullName": "Nene Dogba",
+      "mobileNumber": 650132979,
+      "pinCode": 75015,
+      "locality": "Hauts-de-Seine",
+      "address": "10 Rue Louis Vicat",
+      "cityDistrictTown": "Paris",
+      "state": "France",
+      "landmark": "",
+      "alternatePhoneNumber": null
+    },
+    {
+      "_id": {
+        "$oid": "607423743957300017843494"
+      },
+      "fullName": "Nene",
+      "mobileNumber": 33658623249,
+      "pinCode": 92160,
+      "locality": "",
+      "address": "14, Allée des Platanes",
+      "cityDistrictTown": "Antony",
+      "state": "",
+      "landmark": "",
+      "alternatePhoneNumber": null
+    }
+  ],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60816b22281a860017ff20ac"
+  },
+  "user": {
+    "$oid": "608167ed281a860017ff20a3"
+  },
+  "address": [
+    {
+      "_id": {
+        "$oid": "60816b22281a860017ff20ad"
+      },
+      "fullName": "Dogba",
+      "mobileNumber": 650132979,
+      "pinCode": 75015,
+      "locality": "PARIS",
+      "address": "10 Rue Louis Vicat",
+      "cityDistrictTown": "Paris",
+      "state": "France",
+      "landmark": "",
+      "alternatePhoneNumber": null
+    }
+  ],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60816f52281a860017ff20b8"
+  },
+  "user": {
+    "$oid": "608167ed281a860017ff20a3"
+  },
+  "address": [
+    {
+      "_id": {
+        "$oid": "60816f52281a860017ff20b9"
+      },
+      "fullName": "Dogba",
+      "mobileNumber": 650132979,
+      "pinCode": 91000,
+      "locality": "ESSONNE",
+      "address": "7 Rue Henri Rochefort",
+      "cityDistrictTown": "Evry",
+      "state": "France",
+      "landmark": "",
+      "alternatePhoneNumber": null
+    }
+  ],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60969b33ff892a0017b683d0"
+  },
+  "user": {
+    "$oid": "60969a72ff892a0017b683cc"
+  },
+  "address": [
+    {
+      "_id": {
+        "$oid": "60969b33ff892a0017b683d1"
+      },
+      "fullName": "user user",
+      "mobileNumber": 6788877,
+      "pinCode": 75012,
+      "locality": "Paris",
+      "address": "4 rue Domremy ",
+      "cityDistrictTown": "Paris",
+      "state": "France",
+      "landmark": "",
+      "alternatePhoneNumber": null
+    }
+  ],
+  "__v": 0
+}]

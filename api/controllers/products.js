@@ -43,16 +43,17 @@ exports.createProduct = (req, res, next) => {
 exports.getAllProducts = (req, res, next) => {
 
     const filter = req.params.filter
+    console.log("get all product " + req.params.filter)
 
     if(filter){
         Product.find().sort({price: filter})
-        .select('_id name price description slug imageUrl stock createdAt category')
+        .select('_id name price description slug imageUrl stock createdAt category status')
         .exec()
         .then(products => {
             res.status(200).json({
                 message: products
             })
-            console.log("success get all product" + er)
+            console.log("success get all product" + products)
         })
         .catch(er => {
             res.status(500).json({
@@ -62,19 +63,19 @@ exports.getAllProducts = (req, res, next) => {
         })
     }else{
         Product.find()
-        .select('_id name price description slug imageUrl stock createdAt category')
+        .select('_id name price description slug imageUrl stock createdAt category status')
         .exec()
         .then(products => {
             res.status(200).json({
                 message: products
             })
-            console.log("success get all product" + er)
+            console.log("success get all product" + products)
         })
         .catch(er => {
             res.status(500).json({
                 error: er
             })
-            console.log("error while creating product" + er)
+            console.log("error while getting product" + er)
         })
     }
     

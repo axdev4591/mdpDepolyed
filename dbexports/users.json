@@ -1,0 +1,103 @@
+[{
+  "_id": {
+    "$oid": "5fedbd10dcfef935c4dcd1db"
+  },
+  "isAdmin": false,
+  "firstName": "Axel",
+  "lastName": "MOUELE",
+  "email": "axelmouele4591@gmail.com",
+  "password": "$2b$10$gnFhQG6biYR5n1OjLCiSz.qgGeGv2Kkmb9b3idtUf5AlV11bHmL1m",
+  "createdAt": {
+    "$date": "2020-12-31T11:59:12.391Z"
+  },
+  "__v": 0,
+  "hasAnOrder": true,
+  "tel": "07142536",
+  "sex": "Homme",
+  "status": "EXISTING"
+},{
+  "_id": {
+    "$oid": "5ff1d9943420e7365893b77f"
+  },
+  "isAdmin": false,
+  "firstName": "Jeny",
+  "lastName": "PAKA",
+  "email": "jeny.pala@gmail.com",
+  "password": "$2b$10$hfZ6bLx5cb/C92mHE0QsNu52Nm3Dnw41NC5AeUckP.VZPao7Fjcs.",
+  "createdAt": {
+    "$date": "2021-01-03T14:49:56.912Z"
+  },
+  "__v": 0,
+  "hasAnOrder": false,
+  "sex": "Femme",
+  "status": "EXISTING",
+  "tel": "065247859"
+},{
+  "_id": {
+    "$oid": "6002fc4597071f2df485bcc2"
+  },
+  "isAdmin": false,
+  "firstName": "nene",
+  "lastName": "Dogba",
+  "email": "nene@test.fr",
+  "password": "$2b$10$LfnLsen/CGhGV2Evwxs7/.3OuaC1JylcPTHwJaEjrQdpq6vcKr9fS",
+  "createdAt": {
+    "$date": "2021-01-16T14:46:29.613Z"
+  },
+  "__v": 0,
+  "hasAnOrder": true,
+  "sex": "Homme",
+  "status": "EXISTING",
+  "tel": "0758966325"
+},{
+  "_id": {
+    "$oid": "60030705136acf368cbd6064"
+  },
+  "isAdmin": true,
+  "firstName": "admin",
+  "lastName": "Mouele",
+  "email": "admin@test.fr",
+  "password": "$2b$10$tIPwVMEvppFhdgz0D8Djl.FJeR7TnAnbYzj6QkZhpWd8i7WaYj9dO",
+  "createdAt": {
+    "$date": "2021-01-16T15:32:21.099Z"
+  },
+  "__v": 0,
+  "hasAnOrder": false,
+  "status": "EXISTING",
+  "tel": "028963355",
+  "sex": "Homme"
+},{
+  "_id": {
+    "$oid": "608167ed281a860017ff20a3"
+  },
+  "isAdmin": false,
+  "firstName": "Dogba",
+  "lastName": "Conrad",
+  "email": "hom7tom@gmail.com",
+  "password": "$2b$10$2lMGTbN0EmQvLP3YUAUK5eaOkJL5o8m18i5u5TR9vQ3wtSmUPQBiS",
+  "createdAt": {
+    "$date": "2021-04-22T12:11:25.945Z"
+  },
+  "__v": 0,
+  "hasAnOrder": false,
+  "sex": "Homme",
+  "status": "EXISTING",
+  "tel": "06589636"
+},{
+  "_id": {
+    "$oid": "60969a72ff892a0017b683cc"
+  },
+  "isAdmin": false,
+  "firstName": "user",
+  "lastName": "user",
+  "email": "user@test.fr",
+  "password": "$2b$10$BEwBDzCyuKXB21oXan73DOZSw6R7DrnNADzwIKf8YRU2mqgvLYdVO",
+  "createdAt": {
+    "$date": "2021-05-08T14:04:34.354Z"
+  },
+  "__v": 0,
+  "hasAnOrder": false,
+  "sex": "Femme",
+  "status": "EXISTING",
+  "tel": "06589635"
+}]

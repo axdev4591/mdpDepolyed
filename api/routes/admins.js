@@ -6,6 +6,8 @@ router.post('/signup', adminCtrl.signup);
 
 router.post('/login', adminCtrl.login);
 
+router.post('/update-user/:id', adminCtrl.updateUser);
+
 router.get('/get-users', adminCtrl.getUsers);
 
 /*

@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "5fede1b4c01b313454e6f2e0"
+  },
+  "name": "Livres",
+  "slug": "livres",
+  "parent": "",
+  "createdAt": {
+    "$date": "2020-12-31T14:35:32.495Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fee428f6cc7aa2c6c19fe40"
+  },
+  "name": "ebooks",
+  "slug": "ebooks",
+  "parent": "",
+  "createdAt": {
+    "$date": "2020-12-31T21:28:47.774Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "607aa6be5f8adc60e9732c74"
+  },
+  "name": "audios",
+  "slug": "audios",
+  "parent": "",
+  "createdAt": {
+    "$date": "2021-04-17T21:28:47.774Z"
+  },
+  "_v": 0
+}]

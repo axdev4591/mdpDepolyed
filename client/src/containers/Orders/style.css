@@ -41,6 +41,20 @@
     margin: 5px 10px;
     text-transform: capitalize;
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+  }
+
 .OrderFooter{
     border: 1px solid #cecece;
     padding: 10px;
