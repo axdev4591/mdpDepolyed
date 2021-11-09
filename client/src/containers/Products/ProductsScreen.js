@@ -29,7 +29,8 @@ const ProductsScreen = (props) => {
   const [deleteItem, setDeleteItem] = useState(false);
   const [delProduct,  setDelProduct] = useState(null)
   const [listOfProducts,  setListOfProducts] = useState(null)
-
+  const [openTable, setOpenTable] = useState(true);
+  
   
 
   const userSignin = useSelector(state => state.userSignin);
@@ -47,6 +48,7 @@ const ProductsScreen = (props) => {
     success: successSave,
     error: errorSave,
   } = productSave;
+
 
   const productDelete = useSelector((state) => state.productDelete)
   const {
@@ -176,6 +178,7 @@ const ProductsScreen = (props) => {
         <MdpButton outline mdpXL onClick={() => {
             setCreate(true)
             openModal({})
+            setOpenTable(false)
         } }
         >
          Ajouter
@@ -257,11 +260,16 @@ const ProductsScreen = (props) => {
                     setModalVisible(false)
                     dispatch(listCategories())
                     dispatch(listProducts('', 1))
+                    setOpenTable(true)
                   }}
                 >
                   Annuler
                 </MdpButton>
-                <MdpButton type="submit" outline mdpXL style={{marginLeft: "82px" }}>
+                <MdpButton type="submit" outline mdpXL style={{marginLeft: "82px" }}
+                 onClick={(e) => {
+                  e.preventDefault()
+                  setOpenTable(true)
+                }}>
                   {create ? 'Enregistrer' : 'Sauvegarder'}
                 </MdpButton>
               </li>
@@ -322,6 +330,7 @@ const ProductsScreen = (props) => {
                  setOpenDialog(false)
                  dispatch(listCategories())
                  dispatch(listProducts('', 1))
+                 setOpenTable(true)
                }}
              >
                Annuler
@@ -330,6 +339,7 @@ const ProductsScreen = (props) => {
               onClick={() => {
                 deleteHandler()
                 setOpenDialog(false)
+                setOpenTable(true)
               }}
              
              outline mdpXLContact style={{marginLeft: "82px" }}>
@@ -342,6 +352,7 @@ const ProductsScreen = (props) => {
      </div>
         )}
 
+      { openTable && (
       <div className="product-list">
         <table className="table">
           <thead className="thead">
@@ -373,6 +384,7 @@ const ProductsScreen = (props) => {
                     setCreate(false)
                     openModal(product)
                     window.scrollTo(0, 0);
+                    setOpenTable(false)
                   }}
                   >
                     Editer
@@ -385,6 +397,7 @@ const ProductsScreen = (props) => {
                       setDelProduct(product)
                       setOpenDialog(true)
                       window.scrollTo(0, 0);
+                      setOpenTable(false)
                     }}
                   >
                     Consulter  / Supprimer 
@@ -395,8 +408,9 @@ const ProductsScreen = (props) => {
           </tbody>
         </table>
       </div>
+      )}
     </div>
-  
+
 </div>)
             }
 

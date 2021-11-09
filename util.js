@@ -32,6 +32,7 @@ exports.isAuth = (req, res, next) => {
         return res.status(401).send({ message: 'Invalid Token' });
       }
       req.user = decode
+      console.log("DEBUG1: auth")
       next();
       return;
     });
@@ -42,7 +43,11 @@ exports.isAuth = (req, res, next) => {
 
 exports.isAdmin  = (req, res, next) => {
   console.log(req.user);
+  console.log("provided token: \n")
+  console.log(token)
+  console.log("\n")
   if (req.user && req.user.isAdmin) {
+    console.log("DEBUG1: auth is admin")
     return next();
   }
   return res.status(401).send({ message: 'Your are not Admin.' });
